@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAppointments, deleteAppointment, type Appointment } from "@/lib/appointments";
+import {
+  getAppointments,
+  deleteAppointment,
+  type Appointment,
+} from "@/lib/appointments";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
-import { Trash2, Pencil, CalendarIcon, Plus } from 'lucide-react';
+import { Trash2, Pencil, CalendarIcon, Plus } from "lucide-react";
 import { format, isToday, parseISO, isSameDay } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -19,17 +23,19 @@ interface AppointmentsListProps {
 export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [filteredAppointments, setFilteredAppointments] = useState<Appointment[]>([]);
+  const [filteredAppointments, setFilteredAppointments] = useState<
+    Appointment[]
+  >([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDate, setFilterDate] = useState<"today" | "all">("today");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAppointments();
   }, []);
-
-  
 
   useEffect(() => {
     filterAppointments();
@@ -96,16 +102,17 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     }
   };
 
-  const displayCount = filterDate === "today" 
-    ? filteredAppointments.filter((apt) => {
-        try {
-          const aptDate = parseISO(apt.fecha);
-          return isToday(aptDate);
-        } catch {
-          return false;
-        }
-      }).length
-    : filteredAppointments.length;
+  const displayCount =
+    filterDate === "today"
+      ? filteredAppointments.filter((apt) => {
+          try {
+            const aptDate = parseISO(apt.fecha);
+            return isToday(aptDate);
+          } catch {
+            return false;
+          }
+        }).length
+      : filteredAppointments.length;
 
   return (
     <div className="space-y-6">
@@ -173,7 +180,8 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         ) : filteredAppointments.length === 0 ? (
           <div className="text-center space-y-6">
             <p className="text-white text-xl font-semibold">
-              No tienes turnos para {filterDate === "today" ? "hoy" : "esta fecha"}
+              No tienes turnos para{" "}
+              {filterDate === "today" ? "hoy" : "esta fecha"}
             </p>
             {user?.role === "admin" && onAdd && (
               <Button
@@ -188,37 +196,83 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         ) : (
           <div className="space-y-4">
             {filteredAppointments.map((apt) => (
-              <Card
+              <div
                 key={apt.id}
-                className="bg-cyan-800/50 border-cyan-600 p-4 space-y-2"
+                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg p-5 sm:p-6 hover:border-cyan-400 transition-colors"
               >
-                <div className="flex items-start justify-between">
-                  <div className="space-y-1 flex-1">
-                    <h3 className="text-white font-semibold text-lg">
-                      {apt.nombreCompleto}
-                    </h3>
-                    <p className="text-cyan-200 text-sm">
-                      <CalendarIcon className="inline w-4 h-4 mr-1" />
-                      {format(parseISO(apt.fecha), "dd/MM/yyyy", { locale: es })} - {apt.hora}
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                  <div className="space-y-3 flex-1 w-full">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-white font-bold text-xl">
+                        {apt.nombreCompleto}
+                      </h3>
+                      {user?.role === "admin" && (
+                        <div className="flex gap-2 sm:hidden">
+                          <Button
+                            onClick={() => onEdit?.(apt)}
+                            size="icon"
+                            variant="ghost"
+                            className="text-cyan-300 hover:text-white hover:bg-cyan-700/50 p-2"
+                          >
+                            <Pencil size={20} />
+                          </Button>
+                          <Button
+                            onClick={() => handleDelete(apt.id!)}
+                            size="icon"
+                            variant="ghost"
+                            className="text-red-400 hover:text-red-300 hover:bg-red-900/30 p-2"
+                          >
+                            <Trash2 size={20} />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2">
+                      <CalendarIcon size={16} />
+                      {format(parseISO(apt.fecha), "dd/MM/yyyy", {
+                        locale: es,
+                      })}{" "}
+                      - {apt.hora}
                     </p>
-                    <p className="text-white">
-                      <span className="font-medium">Patente:</span> {apt.patente}
-                    </p>
-                    <p className="text-white">
-                      <span className="font-medium">Modelo:</span> {apt.modelo}
-                    </p>
-                    <p className="text-white">
-                      <span className="font-medium">Teléfono:</span> {apt.telefono}
-                    </p>
-                    <p className="text-cyan-100 text-sm mt-2">{apt.descripcion}</p>
+                    <div className="border-t border-cyan-700/50 pt-3 space-y-2">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <p className="text-cyan-300 text-xs font-semibold uppercase">
+                            Patente
+                          </p>
+                          <p className="text-white font-mono text-lg">
+                            {apt.patente}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-cyan-300 text-xs font-semibold uppercase">
+                            Modelo
+                          </p>
+                          <p className="text-white font-mono text-lg">
+                            {apt.modelo}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-cyan-300 text-xs font-semibold uppercase">
+                          Teléfono
+                        </p>
+                        <p className="text-white">{apt.telefono}</p>
+                      </div>
+                    </div>
+                    <div className="border-t border-cyan-700/50 pt-3">
+                      <p className="text-cyan-200 text-sm italic">
+                        {apt.descripcion}
+                      </p>
+                    </div>
                   </div>
                   {user?.role === "admin" && (
-                    <div className="flex gap-2">
+                    <div className="hidden sm:flex gap-2 flex-col">
                       <Button
                         onClick={() => onEdit?.(apt)}
                         size="icon"
                         variant="ghost"
-                        className="text-cyan-200 hover:text-white hover:bg-cyan-700 p-2"
+                        className="text-cyan-300 hover:text-white hover:bg-cyan-700/50 p-3"
                       >
                         <Pencil size={20} />
                       </Button>
@@ -226,14 +280,14 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                         onClick={() => handleDelete(apt.id!)}
                         size="icon"
                         variant="ghost"
-                        className="text-red-400 hover:text-red-300 hover:bg-red-900/20 p-2"
+                        className="text-red-400 hover:text-red-300 hover:bg-red-900/30 p-3"
                       >
                         <Trash2 size={20} />
                       </Button>
                     </div>
                   )}
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         )}
