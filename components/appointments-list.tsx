@@ -198,12 +198,12 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             {filteredAppointments.map((apt) => (
               <div
                 key={apt.id}
-                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg p-5 sm:p-6 hover:border-cyan-400 transition-colors overflow-hidden"
+                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg p-5 sm:p-6 hover:border-cyan-400 transition-colors overflow-hidden flex flex-col"
               >
-                <div className="flex flex-col sm:flex-row items-start justify-between gap-4 w-full min-w-0">
-                  <div className="space-y-3 flex-1 w-full min-w-0 overflow-hidden">
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-4 w-full min-w-0 flex-1">
+                  <div className="space-y-3 flex-1 w-full min-w-0 overflow-y-auto max-h-96 pr-2">
                     <div className="flex items-center justify-between gap-2 min-w-0">
-                      <h3 className="text-white font-bold text-xl truncate">
+                      <h3 className="text-white font-bold text-xl">
                         {apt.nombreCompleto}
                       </h3>
                       {user?.role === "admin" && (
@@ -236,28 +236,28 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                     </p>
                     <div className="border-t border-cyan-700/50 pt-3 space-y-2 w-full overflow-hidden">
                       <div className="grid grid-cols-2 gap-3 w-full overflow-hidden">
-                        <div className="min-w-0">
+                        <div className="min-w-0 overflow-hidden">
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Patente
                           </p>
-                          <p className="text-white font-mono text-lg truncate">
+                          <p className="text-white font-mono text-lg">
                             {apt.patente}
                           </p>
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 overflow-hidden">
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Modelo
                           </p>
-                          <p className="text-white font-mono text-lg truncate">
+                          <p className="text-white font-mono text-lg">
                             {apt.modelo}
                           </p>
                         </div>
                       </div>
-                      <div className="min-w-0">
+                      <div className="min-w-0 overflow-hidden">
                         <p className="text-cyan-300 text-xs font-semibold uppercase">
                           Teléfono
                         </p>
-                        <p className="text-white truncate">{apt.telefono}</p>
+                        <p className="text-white">{apt.telefono}</p>
                       </div>
                     </div>
                     <div className="border-t border-cyan-700/50 pt-3 min-w-0 w-full overflow-hidden">
