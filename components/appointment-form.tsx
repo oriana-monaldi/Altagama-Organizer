@@ -1,11 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { addAppointment, updateAppointment, type Appointment } from "@/lib/appointments";
+import {
+  addAppointment,
+  updateAppointment,
+  type Appointment,
+} from "@/lib/appointments";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, User, Phone, Wrench, CalendarIcon, Clock, Car } from 'lucide-react';
+import {
+  ArrowLeft,
+  User,
+  Phone,
+  Wrench,
+  CalendarIcon,
+  Clock,
+  Car,
+} from "lucide-react";
 
 interface AppointmentFormProps {
   appointment?: Appointment;
@@ -13,7 +25,11 @@ interface AppointmentFormProps {
   onSuccess: () => void;
 }
 
-export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentFormProps) {
+export function AppointmentForm({
+  appointment,
+  onBack,
+  onSuccess,
+}: AppointmentFormProps) {
   const [formData, setFormData] = useState({
     nombreCompleto: "",
     telefono: "",
@@ -82,7 +98,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
             type="text"
             placeholder="Nombre completo"
             value={formData.nombreCompleto}
-            onChange={(e) => setFormData({ ...formData, nombreCompleto: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, nombreCompleto: e.target.value })
+            }
             required
             className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 py-3 sm:py-4"
           />
@@ -97,7 +115,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
             type="tel"
             placeholder="Teléfono"
             value={formData.telefono}
-            onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, telefono: e.target.value })
+            }
             required
             className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 py-3 sm:py-4"
           />
@@ -111,7 +131,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
           <Textarea
             placeholder="Descripción del trabajo"
             value={formData.descripcion}
-            onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, descripcion: e.target.value })
+            }
             required
             className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 min-h-[100px] py-3 sm:py-4"
           />
@@ -127,7 +149,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
               id="fecha-input"
               type="date"
               value={formData.fecha}
-              onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, fecha: e.target.value })
+              }
               required
               className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 py-3 sm:py-4"
             />
@@ -135,11 +159,13 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
               type="button"
               aria-label="Abrir selector de fecha"
               onClick={() => {
-                const el = document.getElementById('fecha-input') as HTMLInputElement | null;
+                const el = document.getElementById(
+                  "fecha-input"
+                ) as HTMLInputElement | null;
                 if (!el) return;
                 // showPicker está disponible en algunos navegadores; si no, focus()
                 // @ts-ignore
-                if (typeof el.showPicker === 'function') el.showPicker();
+                if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-white p-2 hover:text-cyan-200"
@@ -159,7 +185,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
               id="hora-input"
               type="time"
               value={formData.hora}
-              onChange={(e) => setFormData({ ...formData, hora: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, hora: e.target.value })
+              }
               required
               className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 py-3 sm:py-4"
             />
@@ -167,10 +195,12 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
               type="button"
               aria-label="Abrir selector de hora"
               onClick={() => {
-                const el = document.getElementById('hora-input') as HTMLInputElement | null;
+                const el = document.getElementById(
+                  "hora-input"
+                ) as HTMLInputElement | null;
                 if (!el) return;
                 // @ts-ignore
-                if (typeof el.showPicker === 'function') el.showPicker();
+                if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-white p-2 hover:text-cyan-200"
@@ -189,7 +219,12 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
             type="text"
             placeholder="Patente del vehículo"
             value={formData.patente}
-            onChange={(e) => setFormData({ ...formData, patente: e.target.value.toUpperCase() })}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                patente: e.target.value.toUpperCase(),
+              })
+            }
             required
             className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500"
           />
@@ -204,7 +239,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
             type="text"
             placeholder="Modelo del vehículo"
             value={formData.modelo}
-            onChange={(e) => setFormData({ ...formData, modelo: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, modelo: e.target.value })
+            }
             required
             className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500"
           />
@@ -215,7 +252,11 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
           disabled={loading}
           className="w-full bg-cyan-700 hover:bg-cyan-600 text-white py-4 sm:py-6 text-lg"
         >
-          {loading ? "Guardando..." : appointment ? "Actualizar Turno" : "Registrar Turno"}
+          {loading
+            ? "Guardando..."
+            : appointment
+            ? "Actualizar Turno"
+            : "Registrar Turno"}
         </Button>
       </form>
     </div>

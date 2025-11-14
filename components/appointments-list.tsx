@@ -198,10 +198,10 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             {filteredAppointments.map((apt) => (
               <div
                 key={apt.id}
-                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg p-5 sm:p-6 hover:border-cyan-400 transition-colors"
+                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg p-5 sm:p-6 hover:border-cyan-400 transition-colors overflow-hidden"
               >
-                <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-                  <div className="space-y-3 flex-1 w-full">
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-4 w-full min-w-0">
+                  <div className="space-y-3 flex-1 w-full min-w-0 overflow-hidden">
                     <div className="flex items-center justify-between gap-2 min-w-0">
                       <h3 className="text-white font-bold text-xl truncate">
                         {apt.nombreCompleto}
@@ -227,15 +227,15 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                         </div>
                       )}
                     </div>
-                    <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2">
+                    <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2 min-w-0 overflow-hidden">
                       <CalendarIcon size={16} />
                       {format(parseISO(apt.fecha), "dd/MM/yyyy", {
                         locale: es,
                       })}{" "}
                       - {apt.hora}
                     </p>
-                    <div className="border-t border-cyan-700/50 pt-3 space-y-2">
-                      <div className="grid grid-cols-2 gap-3 w-full">
+                    <div className="border-t border-cyan-700/50 pt-3 space-y-2 w-full overflow-hidden">
+                      <div className="grid grid-cols-2 gap-3 w-full overflow-hidden">
                         <div className="min-w-0">
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Patente
@@ -260,7 +260,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                         <p className="text-white truncate">{apt.telefono}</p>
                       </div>
                     </div>
-                    <div className="border-t border-cyan-700/50 pt-3 min-w-0">
+                    <div className="border-t border-cyan-700/50 pt-3 min-w-0 w-full overflow-hidden">
                       <p className="text-cyan-200 text-sm italic word-break">
                         {apt.descripcion}
                       </p>

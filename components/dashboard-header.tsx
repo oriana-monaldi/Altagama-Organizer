@@ -2,8 +2,8 @@
 
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { useRouter } from 'next/navigation';
-import { Wrench } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import { Wrench } from "lucide-react";
 
 export function DashboardHeader() {
   const { user, logout } = useAuth();
