@@ -198,45 +198,26 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             {filteredAppointments.map((apt) => (
               <div
                 key={apt.id}
-                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg p-5 sm:p-6 hover:border-cyan-400 transition-colors overflow-hidden flex flex-col"
+                className="bg-cyan-900/30 border-2 border-cyan-500 rounded-lg overflow-hidden flex flex-col hover:border-cyan-400 transition-colors"
               >
-                <div className="flex flex-col sm:flex-row items-start justify-between gap-4 w-full min-w-0 flex-1">
-                  <div className="space-y-3 flex-1 w-full min-w-0 overflow-y-auto max-h-96 pr-2">
-                    <div className="flex items-center justify-between gap-2 min-w-0">
+                {/* Contenido con scroll */}
+                <div className="flex-1 overflow-y-auto max-h-96 p-5 sm:p-6">
+                  <div className="space-y-3 min-w-0">
+                    <div className="pr-2">
                       <h3 className="text-white font-bold text-xl">
                         {apt.nombreCompleto}
                       </h3>
-                      {user?.role === "admin" && (
-                        <div className="flex gap-2 sm:hidden">
-                          <Button
-                            onClick={() => onEdit?.(apt)}
-                            size="icon"
-                            variant="ghost"
-                            className="text-cyan-300 hover:text-white hover:bg-cyan-700/50 p-2"
-                          >
-                            <Pencil size={20} />
-                          </Button>
-                          <Button
-                            onClick={() => handleDelete(apt.id!)}
-                            size="icon"
-                            variant="ghost"
-                            className="text-red-400 hover:text-red-300 hover:bg-red-900/30 p-2"
-                          >
-                            <Trash2 size={20} />
-                          </Button>
-                        </div>
-                      )}
                     </div>
-                    <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2 min-w-0 overflow-hidden">
+                    <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2">
                       <CalendarIcon size={16} />
                       {format(parseISO(apt.fecha), "dd/MM/yyyy", {
                         locale: es,
                       })}{" "}
                       - {apt.hora}
                     </p>
-                    <div className="border-t border-cyan-700/50 pt-3 space-y-2 w-full overflow-hidden">
-                      <div className="grid grid-cols-2 gap-3 w-full overflow-hidden">
-                        <div className="min-w-0 overflow-hidden">
+                    <div className="border-t border-cyan-700/50 pt-3 space-y-2">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Patente
                           </p>
@@ -244,7 +225,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                             {apt.patente}
                           </p>
                         </div>
-                        <div className="min-w-0 overflow-hidden">
+                        <div>
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Modelo
                           </p>
@@ -253,40 +234,41 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                           </p>
                         </div>
                       </div>
-                      <div className="min-w-0 overflow-hidden">
+                      <div>
                         <p className="text-cyan-300 text-xs font-semibold uppercase">
                           Teléfono
                         </p>
                         <p className="text-white">{apt.telefono}</p>
                       </div>
                     </div>
-                    <div className="border-t border-cyan-700/50 pt-3 min-w-0 w-full overflow-hidden">
+                    <div className="border-t border-cyan-700/50 pt-3">
                       <p className="text-cyan-200 text-sm italic word-break">
                         {apt.descripcion}
                       </p>
                     </div>
                   </div>
-                  {user?.role === "admin" && (
-                    <div className="hidden sm:flex gap-2 flex-col">
-                      <Button
-                        onClick={() => onEdit?.(apt)}
-                        size="icon"
-                        variant="ghost"
-                        className="text-cyan-300 hover:text-white hover:bg-cyan-700/50 p-3"
-                      >
-                        <Pencil size={20} />
-                      </Button>
-                      <Button
-                        onClick={() => handleDelete(apt.id!)}
-                        size="icon"
-                        variant="ghost"
-                        className="text-red-400 hover:text-red-300 hover:bg-red-900/30 p-3"
-                      >
-                        <Trash2 size={20} />
-                      </Button>
-                    </div>
-                  )}
                 </div>
+                {/* Botones fijos al fondo */}
+                {user?.role === "admin" && (
+                  <div className="border-t border-cyan-700/50 bg-cyan-900/20 p-3 flex gap-2 justify-end">
+                    <Button
+                      onClick={() => onEdit?.(apt)}
+                      size="icon"
+                      variant="ghost"
+                      className="text-cyan-300 hover:text-white hover:bg-cyan-700/50 p-2"
+                    >
+                      <Pencil size={20} />
+                    </Button>
+                    <Button
+                      onClick={() => handleDelete(apt.id!)}
+                      size="icon"
+                      variant="ghost"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-900/30 p-2"
+                    >
+                      <Trash2 size={20} />
+                    </Button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
