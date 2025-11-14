@@ -115,7 +115,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
       : filteredAppointments.length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 flex flex-col">
       <p className="text-white text-sm">
         {displayCount} TURNO{displayCount !== 1 ? "S" : ""}
       </p>
@@ -157,24 +157,10 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         </div>
       </div>
 
-      <div className="mb-3 md:mb-0">
-        <div className="bg-black border border-white/10 rounded-lg p-4">
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={(date) => {
-              setSelectedDate(date);
-              if (date) {
-                setFilterDate("all");
-              }
-            }}
-            locale={es}
-            className="text-white w-full"
-          />
-        </div>
-      </div>
-
-      <Card className="bg-cyan-700/20 border-cyan-600 p-8">
+      <div className="flex flex-col md:flex-row gap-6 w-full">
+        {/* Turno Cards - Lado izquierdo en desktop, arriba en móvil */}
+        <div className="flex-1 min-w-0">
+          <Card className="bg-cyan-700/20 border-cyan-600 p-8 h-full">
         {loading ? (
           <p className="text-white text-center">Cargando turnos...</p>
         ) : filteredAppointments.length === 0 ? (
@@ -272,6 +258,26 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           </div>
         )}
       </Card>
+        </div>
+
+        {/* Calendario - Lado derecho en desktop, abajo en móvil */}
+        <div className="w-full md:w-80 md:shrink-0">
+          <div className="bg-black border border-white/10 rounded-lg p-4 sticky top-0">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={(date) => {
+                setSelectedDate(date);
+                if (date) {
+                  setFilterDate("all");
+                }
+              }}
+              locale={es}
+              className="text-white w-full"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
