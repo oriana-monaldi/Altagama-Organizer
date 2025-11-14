@@ -216,23 +216,21 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                       - {apt.hora}
                     </p>
                     <div className="border-t border-cyan-700/50 pt-3 space-y-2">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <p className="text-cyan-300 text-xs font-semibold uppercase">
-                            Patente
-                          </p>
-                          <p className="text-white font-mono text-lg">
-                            {apt.patente}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-cyan-300 text-xs font-semibold uppercase">
-                            Modelo
-                          </p>
-                          <p className="text-white font-mono text-lg">
-                            {apt.modelo}
-                          </p>
-                        </div>
+                      <div>
+                        <p className="text-cyan-300 text-xs font-semibold uppercase">
+                          Patente
+                        </p>
+                        <p className="text-white font-mono text-lg">
+                          {apt.patente}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-cyan-300 text-xs font-semibold uppercase">
+                          Modelo
+                        </p>
+                        <p className="text-white font-mono text-lg">
+                          {apt.modelo}
+                        </p>
                       </div>
                       <div>
                         <p className="text-cyan-300 text-xs font-semibold uppercase">
