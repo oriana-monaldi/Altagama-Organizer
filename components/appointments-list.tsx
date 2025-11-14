@@ -202,8 +202,8 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
               >
                 <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
                   <div className="space-y-3 flex-1 w-full">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-white font-bold text-xl">
+                    <div className="flex items-center justify-between gap-2 min-w-0">
+                      <h3 className="text-white font-bold text-xl truncate">
                         {apt.nombreCompleto}
                       </h3>
                       {user?.role === "admin" && (
@@ -235,33 +235,33 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                       - {apt.hora}
                     </p>
                     <div className="border-t border-cyan-700/50 pt-3 space-y-2">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
+                      <div className="grid grid-cols-2 gap-3 w-full">
+                        <div className="min-w-0">
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Patente
                           </p>
-                          <p className="text-white font-mono text-lg">
+                          <p className="text-white font-mono text-lg truncate">
                             {apt.patente}
                           </p>
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <p className="text-cyan-300 text-xs font-semibold uppercase">
                             Modelo
                           </p>
-                          <p className="text-white font-mono text-lg">
+                          <p className="text-white font-mono text-lg truncate">
                             {apt.modelo}
                           </p>
                         </div>
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-cyan-300 text-xs font-semibold uppercase">
                           Teléfono
                         </p>
-                        <p className="text-white">{apt.telefono}</p>
+                        <p className="text-white truncate">{apt.telefono}</p>
                       </div>
                     </div>
-                    <div className="border-t border-cyan-700/50 pt-3">
-                      <p className="text-cyan-200 text-sm italic">
+                    <div className="border-t border-cyan-700/50 pt-3 min-w-0">
+                      <p className="text-cyan-200 text-sm italic word-break">
                         {apt.descripcion}
                       </p>
                     </div>
