@@ -40,6 +40,7 @@ export function AppointmentForm({
     modelo: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (appointment) {
@@ -57,9 +58,62 @@ export function AppointmentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
 
     try {
+      // Validar que la fecha no sea menor que hoy usando comparación YYYY-MM-DD
+      function toLocalISO(d: Date) {
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      const todayISO = toLocalISO(new Date());
+      const selectedISO = (formData.fecha || "").trim();
+      const selectedTime = (formData.hora || "").trim();
+
+      if (!selectedISO) {
+        setError("Fecha de turno inválida");
+        setLoading(false);
+        return;
+      }
+
+      if (selectedISO < todayISO) {
+        setError("No puedes crear un turno para una fecha anterior a hoy");
+        setLoading(false);
+        return;
+      }
+
+      // If appointment is for today, ensure time is later than now
+      if (selectedISO === todayISO) {
+        if (!selectedTime) {
+          setError("Hora de turno inválida");
+          setLoading(false);
+          return;
+        }
+
+        const [hh, mm] = selectedTime.split(":").map((v) => parseInt(v, 10));
+        if (Number.isNaN(hh) || Number.isNaN(mm)) {
+          setError("Hora de turno inválida");
+          setLoading(false);
+          return;
+        }
+
+        const [y, m, d] = selectedISO.split("-").map((v) => parseInt(v, 10));
+        const selectedDateTime = new Date(y, m - 1, d, hh, mm, 0, 0);
+        const now = new Date();
+
+        if (selectedDateTime <= now) {
+          setError(
+            "No puedes crear un turno para una hora anterior a la actual"
+          );
+          setLoading(false);
+          return;
+        }
+      }
+
       if (appointment?.id) {
         await updateAppointment(appointment.id, formData);
       } else {
@@ -68,7 +122,7 @@ export function AppointmentForm({
       onSuccess();
     } catch (error) {
       console.error("Error saving appointment:", error);
-      alert("Error al guardar el turno");
+      setError("Error al guardar el turno");
     } finally {
       setLoading(false);
     }
@@ -87,6 +141,12 @@ export function AppointmentForm({
       <h2 className="text-2xl font-bold text-white text-center">
         {appointment ? "EDITAR TURNO" : "NUEVO TURNO"}
       </h2>
+
+      {error && (
+        <div className="bg-red-900/50 border border-red-600 text-red-200 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">

@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Trash2, Pencil, CalendarIcon, Plus } from "lucide-react";
-import { format, isToday, parseISO, isSameDay } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 
 interface AppointmentsListProps {
@@ -34,19 +34,79 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadAppointments();
+    // initial load: respect initial filterDate (default 'today')
+    const todayISO = formatDateISO(new Date());
+    console.log(
+      "[v0] Initial load - filterDate:",
+      filterDate,
+      "todayISO:",
+      todayISO
+    );
+    if (filterDate === "today") loadAppointments(undefined, todayISO);
+    else loadAppointments();
   }, []);
+
+  // Debounce searchTerm to avoid excessive requests
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      const todayISO = formatDateISO(new Date());
+      const fechaFilter = filterDate === "today" ? todayISO : undefined;
+      // When searchTerm changes (or clears), reload from server using the patente and fecha filters
+      console.log(
+        "[v0] Debounced load - searchTerm:",
+        searchTerm,
+        "fechaFilter:",
+        fechaFilter
+      );
+      loadAppointments(searchTerm, fechaFilter);
+    }, 300);
+
+    return () => clearTimeout(handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, filterDate]);
 
   useEffect(() => {
     filterAppointments();
   }, [appointments, searchTerm, filterDate, selectedDate]);
 
-  const loadAppointments = async () => {
+  const loadAppointments = async (
+    patenteFilter?: string,
+    fechaFilter?: string
+  ) => {
     try {
-      console.log("[v0] Loading appointments from Firebase...");
-      const data = await getAppointments();
+      console.log("[v0] Loading appointments from Firebase...", {
+        patenteFilter,
+        fechaFilter,
+      });
+      const data = await getAppointments(patenteFilter, fechaFilter);
       console.log("[v0] Loaded appointments:", data);
-      setAppointments(data);
+
+      // Sort by proximity to today when not filtering by a specific fecha
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      function isoToLocalDate(iso: string) {
+        const [y, m, d] = iso.split("-").map((v) => parseInt(v, 10));
+        return new Date(y, (m || 1) - 1, d || 1);
+      }
+
+      let finalData = data;
+      if (!fechaFilter) {
+        finalData = [...data].sort((a, b) => {
+          const da = isoToLocalDate(a.fecha);
+          const db = isoToLocalDate(b.fecha);
+          const diffA = Math.abs(+da - +today);
+          const diffB = Math.abs(+db - +today);
+          if (diffA !== diffB) return diffA - diffB;
+          // Tie-breaker: prefer future dates over past dates
+          const aFuture = +da >= +today ? 0 : 1;
+          const bFuture = +db >= +today ? 0 : 1;
+          if (aFuture !== bFuture) return aFuture - bFuture;
+          return +da - +db;
+        });
+      }
+
+      setAppointments(finalData);
     } catch (error) {
       console.error("Error loading appointments:", error);
     } finally {
@@ -54,37 +114,30 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     }
   };
 
+  function formatDateISO(d: Date) {
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
   const filterAppointments = () => {
     let filtered = [...appointments];
 
-    // Filter by search term (patente)
+    // Server-side handles patente filtering; keep a client-side normalization fallback
     if (searchTerm) {
+      const s = searchTerm.trim().toLowerCase();
       filtered = filtered.filter((apt) =>
-        apt.patente.toLowerCase().includes(searchTerm.toLowerCase())
+        apt.patente.toLowerCase().includes(s)
       );
     }
-
-    // Filter by date
+    // Filter by date using string comparison YYYY-MM-DD to avoid timezone issues
     if (filterDate === "today") {
-      // Show only today's appointments
-      filtered = filtered.filter((apt) => {
-        try {
-          const aptDate = parseISO(apt.fecha);
-          return isToday(aptDate);
-        } catch {
-          return false;
-        }
-      });
+      const todayISO = formatDateISO(new Date());
+      filtered = filtered.filter((apt) => apt.fecha === todayISO);
     } else if (filterDate === "all" && selectedDate) {
-      // Only filter by calendar when user explicitly selected a date while in "all" mode
-      filtered = filtered.filter((apt) => {
-        try {
-          const aptDate = parseISO(apt.fecha);
-          return isSameDay(aptDate, selectedDate);
-        } catch {
-          return false;
-        }
-      });
+      const iso = formatDateISO(selectedDate);
+      filtered = filtered.filter((apt) => apt.fecha === iso);
     }
 
     console.log("[v0] Filtered appointments:", filtered);
@@ -95,7 +148,14 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     if (window.confirm("¿Estás seguro de eliminar este turno?")) {
       try {
         await deleteAppointment(id);
-        await loadAppointments();
+        const todayISO = formatDateISO(new Date());
+        const fechaFilter =
+          filterDate === "today"
+            ? todayISO
+            : filterDate === "all" && selectedDate
+            ? formatDateISO(selectedDate)
+            : undefined;
+        await loadAppointments(searchTerm, fechaFilter);
       } catch (error) {
         console.error("Error deleting appointment:", error);
       }
@@ -104,14 +164,9 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
   const displayCount =
     filterDate === "today"
-      ? filteredAppointments.filter((apt) => {
-          try {
-            const aptDate = parseISO(apt.fecha);
-            return isToday(aptDate);
-          } catch {
-            return false;
-          }
-        }).length
+      ? filteredAppointments.filter(
+          (apt) => apt.fecha === formatDateISO(new Date())
+        ).length
       : filteredAppointments.length;
 
   return (
@@ -120,21 +175,16 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         {displayCount} TURNO{displayCount !== 1 ? "S" : ""}
       </p>
 
-      <Input
-        type="text"
-        placeholder="Buscar por patente"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500"
-      />
 
       <div className="space-y-3">
         <p className="text-white text-sm font-medium">Filtrar por fecha:</p>
         <div className="flex gap-3">
           <Button
             onClick={() => {
+              const todayISO = formatDateISO(new Date());
               setFilterDate("today");
               setSelectedDate(new Date());
+              loadAppointments(searchTerm, todayISO);
             }}
             className={`flex-1 ${
               filterDate === "today"
@@ -145,7 +195,13 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             HOY
           </Button>
           <Button
-            onClick={() => setFilterDate("all")}
+            onClick={() => {
+              // Show all appointments from the database: clear search and selectedDate
+              setFilterDate("all");
+              setSearchTerm("");
+              setSelectedDate(undefined);
+              loadAppointments();
+            }}
             className={`flex-1 ${
               filterDate === "all"
                 ? "bg-cyan-700 hover:bg-cyan-600"
@@ -168,6 +224,8 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 setSelectedDate(date);
                 if (date) {
                   setFilterDate("all");
+                  const iso = formatDateISO(date as Date);
+                  loadAppointments(searchTerm, iso);
                 }
               }}
               locale={es}

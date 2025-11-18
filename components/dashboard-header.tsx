@@ -15,22 +15,20 @@ export function DashboardHeader() {
   };
 
   return (
-    <div className="bg-cyan-700 rounded-lg px-4 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-      <div className="flex items-center gap-3 w-full md:w-auto">
-        <Wrench className="text-white" size={24} />
-        <div>
-          <h1 className="text-white font-semibold text-lg">Turnos de hoy</h1>
-        </div>
+    <div className="bg-cyan-700 rounded-lg px-3 py-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="flex items-center gap-3 min-w-0 w-full sm:w-auto">
+        <Wrench className="text-white" size={20} />
+        <h1 className="text-white font-semibold text-base">Turnos de hoy</h1>
       </div>
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-3 w-full md:w-auto">
-        <span className="text-white text-sm truncate max-w-full md:max-w-xs">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 min-w-0 w-full sm:w-auto">
+        <span className="text-white text-sm whitespace-normal w-full sm:w-auto">
           {user?.displayName} • {user?.role === "admin" ? "admin" : "viewer"}
         </span>
         <Button
           onClick={handleLogout}
           variant="outline"
           size="sm"
-          className="bg-cyan-800 border-cyan-600 text-white hover:bg-cyan-900 w-full md:w-auto"
+          className="bg-cyan-800 border-cyan-600 text-white hover:bg-cyan-900 px-3 py-1 w-full sm:w-auto mt-1 sm:mt-0"
         >
           Cerrar sesión
         </Button>
