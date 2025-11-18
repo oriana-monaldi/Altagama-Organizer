@@ -62,7 +62,6 @@ export function AppointmentForm({
     setLoading(true);
 
     try {
-      // Validar que la fecha no sea menor que hoy usando comparación YYYY-MM-DD
       function toLocalISO(d: Date) {
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, "0");
@@ -86,7 +85,6 @@ export function AppointmentForm({
         return;
       }
 
-      // If appointment is for today, ensure time is later than now
       if (selectedISO === todayISO) {
         if (!selectedTime) {
           setError("Hora de turno inválida");
@@ -223,8 +221,6 @@ export function AppointmentForm({
                   "fecha-input"
                 ) as HTMLInputElement | null;
                 if (!el) return;
-                // showPicker está disponible en algunos navegadores; si no, focus()
-                // @ts-ignore
                 if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
@@ -259,7 +255,6 @@ export function AppointmentForm({
                   "hora-input"
                 ) as HTMLInputElement | null;
                 if (!el) return;
-                // @ts-ignore
                 if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}

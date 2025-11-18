@@ -34,7 +34,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // initial load: respect initial filterDate (default 'today')
     const todayISO = formatDateISO(new Date());
     console.log(
       "[v0] Initial load - filterDate:",
@@ -46,12 +45,10 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     else loadAppointments();
   }, []);
 
-  // Debounce searchTerm to avoid excessive requests
   useEffect(() => {
     const handler = setTimeout(() => {
       const todayISO = formatDateISO(new Date());
       const fechaFilter = filterDate === "today" ? todayISO : undefined;
-      // When searchTerm changes (or clears), reload from server using the patente and fecha filters
       console.log(
         "[v0] Debounced load - searchTerm:",
         searchTerm,
@@ -62,7 +59,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     }, 300);
 
     return () => clearTimeout(handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, filterDate]);
 
   useEffect(() => {
@@ -81,7 +77,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
       const data = await getAppointments(patenteFilter, fechaFilter);
       console.log("[v0] Loaded appointments:", data);
 
-      // Sort by proximity to today when not filtering by a specific fecha
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -98,7 +93,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           const diffA = Math.abs(+da - +today);
           const diffB = Math.abs(+db - +today);
           if (diffA !== diffB) return diffA - diffB;
-          // Tie-breaker: prefer future dates over past dates
           const aFuture = +da >= +today ? 0 : 1;
           const bFuture = +db >= +today ? 0 : 1;
           if (aFuture !== bFuture) return aFuture - bFuture;
@@ -124,14 +118,12 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const filterAppointments = () => {
     let filtered = [...appointments];
 
-    // Server-side handles patente filtering; keep a client-side normalization fallback
     if (searchTerm) {
       const s = searchTerm.trim().toLowerCase();
       filtered = filtered.filter((apt) =>
         apt.patente.toLowerCase().includes(s)
       );
     }
-    // Filter by date using string comparison YYYY-MM-DD to avoid timezone issues
     if (filterDate === "today") {
       const todayISO = formatDateISO(new Date());
       filtered = filtered.filter((apt) => apt.fecha === todayISO);
@@ -175,7 +167,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         {displayCount} TURNO{displayCount !== 1 ? "S" : ""}
       </p>
 
-
       <div className="space-y-3">
         <p className="text-white text-sm font-medium">Filtrar por fecha:</p>
         <div className="flex gap-3">
@@ -196,7 +187,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           </Button>
           <Button
             onClick={() => {
-              // Show all appointments from the database: clear search and selectedDate
               setFilterDate("all");
               setSearchTerm("");
               setSelectedDate(undefined);
@@ -214,7 +204,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
       </div>
 
       <div className="flex flex-col gap-6 w-full">
-        {/* Calendario - arriba del listado */}
         <div className="w-full">
           <div className="bg-black border border-white/10 rounded-lg p-4">
             <Calendar
@@ -234,7 +223,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           </div>
         </div>
 
-        {/* Turno Cards - debajo del calendario */}
         <div className="flex-1 min-w-0">
           <Card className="p-4 h-full bg-transparent">
             {loading ? (

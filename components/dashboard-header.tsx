@@ -15,23 +15,26 @@ export function DashboardHeader() {
   };
 
   return (
-    <div className="bg-cyan-700 rounded-lg px-3 py-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-      <div className="flex items-center gap-3 min-w-0 w-full sm:w-auto">
-        <Wrench className="text-white" size={20} />
-        <h1 className="text-white font-semibold text-base">Turnos de hoy</h1>
+    <div className="bg-cyan-700 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="flex items-center gap-3">
+        <Wrench className="text-white" size={18} />
+        <h1 className="text-white font-bold text-lg">Turnos</h1>
       </div>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 min-w-0 w-full sm:w-auto">
-        <span className="text-white text-sm whitespace-normal w-full sm:w-auto">
+
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+        <div className="text-white text-sm w-full sm:w-auto mt-1 sm:mt-0">
           {user?.displayName} • {user?.role === "admin" ? "admin" : "viewer"}
-        </span>
-        <Button
-          onClick={handleLogout}
-          variant="outline"
-          size="sm"
-          className="bg-cyan-800 border-cyan-600 text-white hover:bg-cyan-900 px-3 py-1 w-full sm:w-auto mt-1 sm:mt-0"
-        >
-          Cerrar sesión
-        </Button>
+        </div>
+        <div className="w-full sm:w-auto">
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            size="sm"
+            className="bg-cyan-800 border border-cyan-600 text-white hover:bg-cyan-900 px-4 py-2 rounded-md w-full sm:w-auto"
+          >
+            Cerrar sesión
+          </Button>
+        </div>
       </div>
     </div>
   );

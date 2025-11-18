@@ -46,26 +46,10 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-black p-4 md:p-8">
       <div className="max-w-3xl mx-auto space-y-6">
+
         {view === "home" && (
           <>
-            <div className="flex items-center justify-between bg-cyan-700 rounded-lg px-6 py-4">
-              <span className="text-white font-semibold text-lg">Bienvenido</span>
-              <div className="flex items-center gap-4">
-                <span className="text-white text-sm">
-                  {user.displayName} • {user.role === "admin" ? "admin" : "viewer"}
-                </span>
-                <Button
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className="bg-cyan-800 border-cyan-600 text-white hover:bg-cyan-900"
-                >
-                  Cerrar sesión
-                </Button>
-              </div>
-            </div>
+            <DashboardHeader />
 
             <div className="flex justify-center py-12">
               <Image
@@ -106,7 +90,9 @@ export default function DashboardPage() {
             >
               <ArrowLeft size={24} />
             </Button>
+
             <DashboardHeader />
+
             <AppointmentsList
               onEdit={handleEdit}
               onAdd={user.role === "admin" ? () => setView("add") : undefined}
