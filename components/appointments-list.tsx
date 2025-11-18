@@ -23,9 +23,9 @@ interface AppointmentsListProps {
 export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [filteredAppointments, setFilteredAppointments] = useState<Appointment[]>(
-    []
-  );
+  const [filteredAppointments, setFilteredAppointments] = useState<
+    Appointment[]
+  >([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDate, setFilterDate] = useState<"today" | "all">("today");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
@@ -184,7 +184,8 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             ) : filteredAppointments.length === 0 ? (
               <div className="text-center space-y-6">
                 <p className="text-white text-xl font-semibold">
-                  No tienes turnos para {filterDate === "today" ? "hoy" : "esta fecha"}
+                  No tienes turnos para{" "}
+                  {filterDate === "today" ? "hoy" : "esta fecha"}
                 </p>
                 {user?.role === "admin" && onAdd && (
                   <Button
@@ -199,7 +200,10 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             ) : (
               <div className="space-y-4">
                 {filteredAppointments.map((apt) => (
-                  <div key={apt.id} className="relative overflow-hidden flex flex-col bg-cyan-900/20 rounded-lg w-full md:max-w-3xl mx-auto">
+                  <div
+                    key={apt.id}
+                    className="relative overflow-hidden flex flex-col bg-cyan-900/20 rounded-lg w-full md:max-w-3xl mx-auto"
+                  >
                     {user?.role === "admin" && (
                       <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
                         <Button
@@ -226,28 +230,45 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                     <div className="flex-1 overflow-y-auto max-h-96 p-6 pt-12">
                       <div className="space-y-3 min-w-0">
                         <div className="pr-2">
-                          <h3 className="text-white font-bold text-xl">{apt.nombreCompleto}</h3>
+                          <h3 className="text-white font-bold text-xl">
+                            {apt.nombreCompleto}
+                          </h3>
                         </div>
                         <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2">
                           <CalendarIcon size={16} />
-                          {format(parseISO(apt.fecha), "dd/MM/yyyy", { locale: es })} - {apt.hora}
+                          {format(parseISO(apt.fecha), "dd/MM/yyyy", {
+                            locale: es,
+                          })}{" "}
+                          - {apt.hora}
                         </p>
                         <div className="border-t border-cyan-700/50 pt-3 space-y-2">
                           <div>
-                            <p className="text-cyan-300 text-xs font-semibold uppercase">Patente</p>
-                            <p className="text-white font-mono text-lg">{apt.patente}</p>
+                            <p className="text-cyan-300 text-xs font-semibold uppercase">
+                              Patente
+                            </p>
+                            <p className="text-white font-mono text-lg">
+                              {apt.patente}
+                            </p>
                           </div>
                           <div>
-                            <p className="text-cyan-300 text-xs font-semibold uppercase">Modelo</p>
-                            <p className="text-white font-mono text-lg">{apt.modelo}</p>
+                            <p className="text-cyan-300 text-xs font-semibold uppercase">
+                              Modelo
+                            </p>
+                            <p className="text-white font-mono text-lg">
+                              {apt.modelo}
+                            </p>
                           </div>
                           <div>
-                            <p className="text-cyan-300 text-xs font-semibold uppercase">Teléfono</p>
+                            <p className="text-cyan-300 text-xs font-semibold uppercase">
+                              Teléfono
+                            </p>
                             <p className="text-white">{apt.telefono}</p>
                           </div>
                         </div>
                         <div className="border-t border-cyan-700/50 pt-3">
-                          <p className="text-cyan-200 text-sm italic word-break">{apt.descripcion}</p>
+                          <p className="text-cyan-200 text-sm italic word-break">
+                            {apt.descripcion}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -257,8 +278,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             )}
           </Card>
         </div>
-
-        
       </div>
     </div>
   );
