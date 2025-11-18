@@ -30,6 +30,9 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Auth file with local credentials (keep out of repo)
+lib/auth.tsx
+
 # IDE
 .vscode
 .idea
