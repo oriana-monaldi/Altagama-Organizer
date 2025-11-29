@@ -205,7 +205,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
       <div className="flex flex-col gap-6 w-full">
         <div className="w-full">
-          <div className="bg-black border border-white/10 rounded-lg p-4 mb-16">
+          <div className="bg-black border border-white/10 rounded-lg p-4 mb-10">
             <Calendar
               mode="single"
               selected={selectedDate}
