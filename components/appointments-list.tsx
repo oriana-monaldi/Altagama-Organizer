@@ -205,7 +205,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
       <div className="flex flex-col gap-6 w-full">
         <div className="w-full">
-          <div className="bg-black border border-white/10 rounded-lg p-4">
+          <div className="bg-black border border-white/10 rounded-lg p-4 mb-8">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -230,7 +230,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
             ) : filteredAppointments.length === 0 ? (
               <div className="text-center space-y-6">
                 <p className="text-white text-xl font-semibold">
-                  No tienes turnos para{" "}
+                  No hay turnos registrados para{" "}
                   {filterDate === "today" ? "hoy" : "esta fecha"}
                 </p>
                 {user?.role === "admin" && onAdd && (
