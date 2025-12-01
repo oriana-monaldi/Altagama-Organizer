@@ -205,7 +205,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
       <div className="flex flex-col gap-6 w-full">
         <div className="w-full">
-          <div className="bg-black border border-white/10 rounded-lg p-4 mb-18">
+          <div className="bg-black border border-white/10 rounded-lg p-2 sm:p-4 mb-6 overflow-hidden">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -218,7 +218,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 }
               }}
               locale={es}
-              className="text-white w-full"
+              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center"
             />
           </div>
         </div>
