@@ -202,7 +202,7 @@ export function AppointmentForm({
             <CalendarIcon size={16} />
             Fecha
           </label>
-          <div className="relative w-full">
+          <div className="relative">
             <Input
               id="fecha-input"
               type="date"
@@ -211,7 +211,8 @@ export function AppointmentForm({
                 setFormData({ ...formData, fecha: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full"
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 [&::-webkit-calendar-picker-indicator]:opacity-0"
+              style={{ width: '100%' }}
             />
             <button
               type="button"
@@ -236,7 +237,7 @@ export function AppointmentForm({
             <Clock size={16} />
             Hora
           </label>
-          <div className="relative w-full">
+          <div className="relative">
             <Input
               id="hora-input"
               type="time"
@@ -245,7 +246,8 @@ export function AppointmentForm({
                 setFormData({ ...formData, hora: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full"
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 [&::-webkit-calendar-picker-indicator]:opacity-0"
+              style={{ width: '100%' }}
             />
             <button
               type="button"
