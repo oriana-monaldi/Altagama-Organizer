@@ -130,6 +130,30 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     } else if (filterDate === "all" && selectedDate) {
       const iso = formatDateISO(selectedDate);
       filtered = filtered.filter((apt) => apt.fecha === iso);
+    } else if (filterDate === "all" && !selectedDate) {
+      // Cuando se selecciona "TODOS", filtrar solo turnos futuros
+      const now = new Date();
+      const todayISO = formatDateISO(now);
+      
+      filtered = filtered.filter((apt) => {
+        // Si el turno es de una fecha futura, incluirlo
+        if (apt.fecha > todayISO) {
+          return true;
+        }
+        
+        // Si el turno es de hoy, verificar la hora
+        if (apt.fecha === todayISO) {
+          const [hh, mm] = apt.hora.split(":").map((v) => parseInt(v, 10));
+          const appointmentTime = new Date();
+          appointmentTime.setHours(hh, mm, 0, 0);
+          
+          // Solo incluir si la hora del turno es mayor a la hora actual
+          return appointmentTime > now;
+        }
+        
+        // Si el turno es del pasado, no incluirlo
+        return false;
+      });
     }
 
     console.log("[v0] Filtered appointments:", filtered);
@@ -218,7 +242,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 }
               }}
               locale={es}
-              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center"
+              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center [&_button]:h-9 [&_button]:w-9"
             />
           </div>
         </div>
