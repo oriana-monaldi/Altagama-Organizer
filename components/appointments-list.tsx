@@ -398,7 +398,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 }
               }}
               locale={es}
-              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center [&_button]:w-full [&_button]:aspect-square [&_.rdp-day_today]:bg-transparent [&_.rdp-day_today]:text-white"
+              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center [&_.rdp-day]:w-full [&_.rdp-day]:aspect-square [&_.rdp-day_today]:bg-transparent [&_.rdp-day_today]:text-white"
             />
           </div>
         </div>
