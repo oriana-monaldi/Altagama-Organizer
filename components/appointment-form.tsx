@@ -127,7 +127,7 @@ export function AppointmentForm({
   };
 
   return (
-    <div className="space-y-6 max-w-lg mx-auto px-4 sm:px-0">
+    <div className="space-y-6 max-w-lg mx-auto px-4 sm:px-0 w-full">
       <Button
         onClick={onBack}
         variant="ghost"
@@ -146,8 +146,8 @@ export function AppointmentForm({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-2">
+      <form onSubmit={handleSubmit} className="space-y-6 w-full">
+        <div className="space-y-2 w-full">
           <label className="text-sm sm:text-base text-white flex items-center gap-2">
             <User size={18} />
             Nombre Completo
@@ -160,11 +160,11 @@ export function AppointmentForm({
               setFormData({ ...formData, nombreCompleto: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <label className="text-sm sm:text-base text-white flex items-center gap-2">
             <Phone size={18} />
             Teléfono
@@ -177,11 +177,11 @@ export function AppointmentForm({
               setFormData({ ...formData, telefono: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <label className="text-sm sm:text-base text-white flex items-center gap-2">
             <Wrench size={18} />
             Descripción del trabajo
@@ -193,16 +193,16 @@ export function AppointmentForm({
               setFormData({ ...formData, descripcion: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 min-h-[100px]"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 min-h-[100px] w-full"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <label className="text-sm text-white flex items-center gap-2">
             <CalendarIcon size={16} />
             Fecha
           </label>
-          <div className="relative">
+          <div className="relative w-full">
             <Input
               id="fecha-input"
               type="date"
@@ -211,8 +211,7 @@ export function AppointmentForm({
                 setFormData({ ...formData, fecha: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 [&::-webkit-calendar-picker-indicator]:opacity-0"
-              style={{ width: '100%' }}
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0"
             />
             <button
               type="button"
@@ -225,19 +224,19 @@ export function AppointmentForm({
                 if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto z-10"
             >
               <CalendarIcon size={20} />
             </button>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <label className="text-sm text-white flex items-center gap-2">
             <Clock size={16} />
             Hora
           </label>
-          <div className="relative">
+          <div className="relative w-full">
             <Input
               id="hora-input"
               type="time"
@@ -246,8 +245,7 @@ export function AppointmentForm({
                 setFormData({ ...formData, hora: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 [&::-webkit-calendar-picker-indicator]:opacity-0"
-              style={{ width: '100%' }}
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0"
             />
             <button
               type="button"
@@ -260,14 +258,14 @@ export function AppointmentForm({
                 if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto z-10"
             >
               <Clock size={20} />
             </button>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <label className="text-sm text-white flex items-center gap-2">
             <Car size={16} />
             Patente
@@ -283,11 +281,11 @@ export function AppointmentForm({
               })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <label className="text-sm text-white flex items-center gap-2">
             <Car size={16} />
             Modelo
@@ -300,7 +298,7 @@ export function AppointmentForm({
               setFormData({ ...formData, modelo: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
           />
         </div>
 
