@@ -202,7 +202,7 @@ export function AppointmentForm({
             <CalendarIcon size={16} />
             Fecha
           </label>
-          <div className="relative">
+          <div className="relative w-full">
             <Input
               id="fecha-input"
               type="date"
@@ -211,7 +211,7 @@ export function AppointmentForm({
                 setFormData({ ...formData, fecha: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 h-12"
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full"
             />
             <button
               type="button"
@@ -224,7 +224,7 @@ export function AppointmentForm({
                 if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-white p-2 hover:text-cyan-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto"
             >
               <CalendarIcon size={20} />
             </button>
@@ -236,7 +236,7 @@ export function AppointmentForm({
             <Clock size={16} />
             Hora
           </label>
-          <div className="relative">
+          <div className="relative w-full">
             <Input
               id="hora-input"
               type="time"
@@ -245,7 +245,7 @@ export function AppointmentForm({
                 setFormData({ ...formData, hora: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 h-12"
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full"
             />
             <button
               type="button"
@@ -258,7 +258,7 @@ export function AppointmentForm({
                 if (typeof el.showPicker === "function") el.showPicker();
                 else el.focus();
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-white p-2 hover:text-cyan-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto"
             >
               <Clock size={20} />
             </button>
