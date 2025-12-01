@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
-import { Trash2, Pencil, CalendarIcon, Plus } from "lucide-react";
+import { Trash2, Pencil, CalendarIcon, Plus, AlertTriangle, X } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -19,6 +19,139 @@ interface AppointmentsListProps {
   onEdit?: (appointment: Appointment) => void;
   onAdd?: () => void;
 }
+
+// Modal de confirmación de eliminación
+const DeleteConfirmModal = ({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  appointmentInfo 
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => Promise<void>;
+  appointmentInfo: {
+    nombreCompleto?: string;
+    fecha?: string;
+    hora?: string;
+    patente?: string;
+  } | null;
+}) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  if (!isOpen) return null;
+
+  const handleConfirm = async () => {
+    setIsDeleting(true);
+    await onConfirm();
+    setIsDeleting(false);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-cyan-700/30 rounded-2xl shadow-2xl max-w-md w-full transform transition-all animate-scaleIn">
+        {/* Header */}
+        <div className="relative p-6 border-b border-cyan-700/20">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            disabled={isDeleting}
+          >
+            <X size={20} />
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-red-900/30 rounded-full border border-red-700/50">
+              <AlertTriangle className="text-red-500" size={24} />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">Eliminar Turno</h3>
+              <p className="text-sm text-gray-400 mt-1">Esta acción no se puede deshacer</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="p-6">
+          <p className="text-gray-300 mb-4">
+            ¿Estás seguro de que deseas eliminar este turno?
+          </p>
+          
+          {appointmentInfo && (
+            <div className="bg-cyan-900/20 rounded-lg p-4 space-y-2 border border-cyan-700/30">
+              {appointmentInfo.nombreCompleto && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-cyan-300">Paciente:</span>
+                  <span className="text-sm font-semibold text-white">{appointmentInfo.nombreCompleto}</span>
+                </div>
+              )}
+              {appointmentInfo.patente && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-cyan-300">Patente:</span>
+                  <span className="text-sm font-semibold text-white font-mono">{appointmentInfo.patente}</span>
+                </div>
+              )}
+              {appointmentInfo.fecha && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-cyan-300">Fecha:</span>
+                  <span className="text-sm font-semibold text-white">
+                    {format(parseISO(appointmentInfo.fecha), "dd/MM/yyyy", { locale: es })}
+                  </span>
+                </div>
+              )}
+              {appointmentInfo.hora && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-cyan-300">Hora:</span>
+                  <span className="text-sm font-semibold text-white">{appointmentInfo.hora}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 bg-gray-900/50 rounded-b-2xl flex gap-3">
+          <Button
+            onClick={onClose}
+            disabled={isDeleting}
+            className="flex-1 bg-transparent border border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={isDeleting}
+            className="flex-1 bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {isDeleting ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Eliminando...
+              </>
+            ) : (
+              <>
+                <Trash2 size={18} />
+                Eliminar
+              </>
+            )}
+          </Button>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+        .animate-scaleIn { animation: scaleIn 0.2s ease-out; }
+      `}</style>
+    </div>
+  );
+};
 
 export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const { user } = useAuth();
@@ -32,6 +165,16 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     new Date()
   );
   const [loading, setLoading] = useState(true);
+  
+  // Estados para el modal de eliminación
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [appointmentToDelete, setAppointmentToDelete] = useState<{
+    id: string;
+    nombreCompleto?: string;
+    fecha?: string;
+    hora?: string;
+    patente?: string;
+  } | null>(null);
 
   useEffect(() => {
     const todayISO = formatDateISO(new Date());
@@ -160,21 +303,34 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     setFilteredAppointments(filtered);
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm("¿Estás seguro de eliminar este turno?")) {
-      try {
-        await deleteAppointment(id);
-        const todayISO = formatDateISO(new Date());
-        const fechaFilter =
-          filterDate === "today"
-            ? todayISO
-            : filterDate === "all" && selectedDate
-            ? formatDateISO(selectedDate)
-            : undefined;
-        await loadAppointments(searchTerm, fechaFilter);
-      } catch (error) {
-        console.error("Error deleting appointment:", error);
-      }
+  const handleDeleteClick = (appointment: Appointment) => {
+    setAppointmentToDelete({
+      id: appointment.id!,
+      nombreCompleto: appointment.nombreCompleto,
+      fecha: appointment.fecha,
+      hora: appointment.hora,
+      patente: appointment.patente,
+    });
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!appointmentToDelete) return;
+    
+    try {
+      await deleteAppointment(appointmentToDelete.id);
+      const todayISO = formatDateISO(new Date());
+      const fechaFilter =
+        filterDate === "today"
+          ? todayISO
+          : filterDate === "all" && selectedDate
+          ? formatDateISO(selectedDate)
+          : undefined;
+      await loadAppointments(searchTerm, fechaFilter);
+      setShowDeleteModal(false);
+      setAppointmentToDelete(null);
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
     }
   };
 
@@ -242,7 +398,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 }
               }}
               locale={es}
-              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center [&_button]:h-9 [&_button]:w-9"
+              className="text-white w-full [&_table]:w-full [&_td]:text-center [&_th]:text-center [&_button]:w-full [&_button]:aspect-square [&_.rdp-day_today]:bg-transparent [&_.rdp-day_today]:text-white"
             />
           </div>
         </div>
@@ -286,7 +442,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                           <Pencil size={18} />
                         </Button>
                         <Button
-                          onClick={() => handleDelete(apt.id!)}
+                          onClick={() => handleDeleteClick(apt)}
                           size="icon"
                           variant="ghost"
                           title="Eliminar turno"
@@ -349,6 +505,16 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           </Card>
         </div>
       </div>
+
+      <DeleteConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setAppointmentToDelete(null);
+        }}
+        onConfirm={handleDeleteConfirm}
+        appointmentInfo={appointmentToDelete}
+      />
     </div>
   );
 }
