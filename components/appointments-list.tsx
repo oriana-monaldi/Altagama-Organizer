@@ -506,6 +506,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         </div>
       </div>
 
+      {/* Modal de confirmación de eliminación */}
       <DeleteConfirmModal
         isOpen={showDeleteModal}
         onClose={() => {
