@@ -160,7 +160,7 @@ export function AppointmentForm({
               setFormData({ ...formData, nombreCompleto: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 py-3 sm:py-4"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
           />
         </div>
 
@@ -177,7 +177,7 @@ export function AppointmentForm({
               setFormData({ ...formData, telefono: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 py-3 sm:py-4"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
           />
         </div>
 
@@ -193,7 +193,7 @@ export function AppointmentForm({
               setFormData({ ...formData, descripcion: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 min-h-[100px] py-3 sm:py-4"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 min-h-[100px]"
           />
         </div>
 
@@ -211,7 +211,7 @@ export function AppointmentForm({
                 setFormData({ ...formData, fecha: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 py-3 sm:py-4"
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 h-12"
             />
             <button
               type="button"
@@ -245,7 +245,7 @@ export function AppointmentForm({
                 setFormData({ ...formData, hora: e.target.value })
               }
               required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 py-3 sm:py-4"
+              className="bg-black border-cyan-600 text-white focus:border-cyan-500 pr-12 h-12"
             />
             <button
               type="button"
@@ -281,7 +281,7 @@ export function AppointmentForm({
               })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
           />
         </div>
 
@@ -298,7 +298,7 @@ export function AppointmentForm({
               setFormData({ ...formData, modelo: e.target.value })
             }
             required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500"
+            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12"
           />
         </div>
 
