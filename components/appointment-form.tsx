@@ -257,7 +257,8 @@ export function AppointmentForm({
                         setFormData({ ...formData, fecha: e.target.value })
                       }
                       required
-                      className="h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [color-scheme:dark]"
+                      className="w-full h-12 px-3 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [color-scheme:dark] text-sm"
+                      style={{ colorScheme: 'dark' }}
                     />
                   </div>
                 </div>
@@ -276,7 +277,8 @@ export function AppointmentForm({
                         setFormData({ ...formData, hora: e.target.value })
                       }
                       required
-                      className="h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [color-scheme:dark]"
+                      className="w-full h-12 px-3 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [color-scheme:dark] text-sm"
+                      style={{ colorScheme: 'dark' }}
                     />
                   </div>
                 </div>
