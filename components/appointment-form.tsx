@@ -353,7 +353,7 @@ export function AppointmentForm({
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-14 sm:h-16 bg-cyan-700 hover:bg-cyan-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full h-14 sm:h-16 bg-cyan-700 hover:bg-cyan-600 text-black font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
