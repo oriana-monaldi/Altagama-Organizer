@@ -144,13 +144,13 @@ export function AppointmentForm({
           </Button>
 
           <div className="text-center space-y-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold text-white">
               {appointment ? "Editar Turno" : "Nuevo Turno"}
             </h1>
-            <p className="text-gray-400 text-sm sm:text-base">
+            <p className="text-gray-400">
               {appointment
-                ? "Modifica los detalles de tu cita"
-                : "Completa el formulario para agendar tu cita"}
+                ? "Modifica los detalles de tu turno"
+                : "Completa el formulario para agendar tu turno"}
             </p>
           </div>
         </div>
@@ -186,7 +186,10 @@ export function AppointmentForm({
                     placeholder="Ingresa tu nombre completo"
                     value={formData.nombreCompleto}
                     onChange={(e) =>
-                      setFormData({ ...formData, nombreCompleto: e.target.value })
+                      setFormData({
+                        ...formData,
+                        nombreCompleto: e.target.value,
+                      })
                     }
                     required
                     className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
@@ -361,9 +364,7 @@ export function AppointmentForm({
                 Guardando...
               </>
             ) : (
-              <>
-                {appointment ? "Actualizar Turno" : "Registrar Turno"}
-              </>
+              <>{appointment ? "Actualizar Turno" : "Registrar Turno"}</>
             )}
           </Button>
         </form>
