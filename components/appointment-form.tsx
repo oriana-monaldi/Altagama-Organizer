@@ -130,7 +130,6 @@ export function AppointmentForm({
   return (
     <div className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <Button
             onClick={onBack}
@@ -155,17 +154,14 @@ export function AppointmentForm({
           </div>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 rounded-xl bg-red-500/10 border-2 border-red-500/50 backdrop-blur-sm animate-pulse">
             <p className="text-red-300 text-sm font-medium">{error}</p>
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
-            {/* Personal Info Section */}
             <div className="space-y-6">
               <div className="flex items-center gap-2 pb-4 border-b border-white/10">
                 <User size={20} className="text-cyan-400" />
@@ -174,7 +170,6 @@ export function AppointmentForm({
                 </h3>
               </div>
 
-              {/* Nombre Completo */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
                   <User size={16} />
@@ -219,7 +214,6 @@ export function AppointmentForm({
             </div>
           </div>
 
-          {/* Service Info Section */}
           <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
             <div className="space-y-6">
               <div className="flex items-center gap-2 pb-4 border-b border-white/10">
@@ -229,7 +223,6 @@ export function AppointmentForm({
                 </h3>
               </div>
 
-              {/* Descripción */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
                   <Wrench size={16} />
@@ -249,9 +242,7 @@ export function AppointmentForm({
                 </div>
               </div>
 
-              {/* Fecha y Hora - Grid responsivo */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Fecha */}
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
                     <Calendar size={16} />
@@ -271,7 +262,6 @@ export function AppointmentForm({
                   </div>
                 </div>
 
-                {/* Hora */}
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
                     <Clock size={16} />
@@ -286,7 +276,7 @@ export function AppointmentForm({
                         setFormData({ ...formData, hora: e.target.value })
                       }
                       required
-                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
+                      className=" h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                     />
                   </div>
                 </div>
@@ -294,7 +284,6 @@ export function AppointmentForm({
             </div>
           </div>
 
-          {/* Vehicle Info Section */}
           <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
             <div className="space-y-6">
               <div className="flex items-center gap-2 pb-4 border-b border-white/10">
@@ -304,9 +293,7 @@ export function AppointmentForm({
                 </h3>
               </div>
 
-              {/* Patente y Modelo - Grid responsivo */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Patente */}
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
                     <Car size={16} />
@@ -329,7 +316,6 @@ export function AppointmentForm({
                   </div>
                 </div>
 
-                {/* Modelo */}
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
                     <Car size={16} />
@@ -352,7 +338,6 @@ export function AppointmentForm({
             </div>
           </div>
 
-          {/* Submit Button */}
           <Button
             type="submit"
             disabled={loading}
