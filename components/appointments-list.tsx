@@ -8,16 +8,20 @@ import {
 } from "@/lib/appointments";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Trash2,
   Pencil,
-  CalendarIcon,
+  Calendar as CalendarIcon,
   Plus,
   AlertTriangle,
   X,
+  Clock,
+  Car,
+  User,
+  Phone,
+  FileText,
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
@@ -54,22 +58,28 @@ const DeleteConfirmModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-cyan-700/30 rounded-2xl shadow-2xl max-w-md w-full transform transition-all animate-scaleIn">
-        <div className="relative p-6 border-b border-cyan-700/20">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn">
+      <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-md w-full border border-red-500/30 overflow-hidden animate-scaleIn">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5 blur-xl"></div>
+        
+        <div className="relative p-6 border-b border-red-500/20">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
             disabled={isDeleting}
+            className="absolute top-4 right-4 p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-300 disabled:opacity-50 border-none bg-transparent cursor-pointer"
           >
             <X size={20} />
           </button>
-          <div className="flex items-center gap-3">
-            <div className="p-3 bg-red-900/30 rounded-full border border-red-700/50">
-              <AlertTriangle className="text-red-500" size={24} />
+          
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="absolute inset-0 bg-red-500/20 rounded-2xl blur-xl"></div>
+              <div className="relative p-3 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-2xl border border-red-500/30">
+                <AlertTriangle className="text-red-400" size={28} />
+              </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Eliminar Turno</h3>
+              <h3 className="text-2xl font-bold text-white">Eliminar Turno</h3>
               <p className="text-sm text-gray-400 mt-1">
                 Esta acción no se puede deshacer
               </p>
@@ -77,39 +87,39 @@ const DeleteConfirmModal = ({
           </div>
         </div>
 
-        <div className="p-6">
-          <p className="text-gray-300 mb-4">
+        <div className="relative p-6">
+          <p className="text-gray-300 mb-6 text-base">
             ¿Estás seguro de que deseas eliminar este turno?
           </p>
-
+          
           {appointmentInfo && (
-            <div className="bg-cyan-900/20 rounded-lg p-4 space-y-2 border border-cyan-700/30">
+            <div className="bg-slate-950/50 rounded-2xl p-5 space-y-3 border border-red-500/20 backdrop-blur-sm">
               {appointmentInfo.nombreCompleto && (
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">
-                    Paciente:
+                <div className="flex justify-between items-center pb-3 border-b border-white/5">
+                  <span className="text-sm font-semibold text-red-300 uppercase tracking-wide">
+                    Paciente
                   </span>
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-base font-bold text-white">
                     {appointmentInfo.nombreCompleto}
                   </span>
                 </div>
               )}
               {appointmentInfo.patente && (
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">
-                    Patente:
+                <div className="flex justify-between items-center pb-3 border-b border-white/5">
+                  <span className="text-sm font-semibold text-red-300 uppercase tracking-wide">
+                    Patente
                   </span>
-                  <span className="text-sm font-semibold text-white font-mono">
+                  <span className="text-base font-bold text-white font-mono bg-white/5 px-3 py-1 rounded-lg">
                     {appointmentInfo.patente}
                   </span>
                 </div>
               )}
               {appointmentInfo.fecha && (
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">
-                    Fecha:
+                <div className="flex justify-between items-center pb-3 border-b border-white/5">
+                  <span className="text-sm font-semibold text-red-300 uppercase tracking-wide">
+                    Fecha
                   </span>
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-base font-bold text-white">
                     {format(parseISO(appointmentInfo.fecha), "dd/MM/yyyy", {
                       locale: es,
                     })}
@@ -118,10 +128,10 @@ const DeleteConfirmModal = ({
               )}
               {appointmentInfo.hora && (
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">
-                    Hora:
+                  <span className="text-sm font-semibold text-red-300 uppercase tracking-wide">
+                    Hora
                   </span>
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-base font-bold text-white">
                     {appointmentInfo.hora}
                   </span>
                 </div>
@@ -130,22 +140,22 @@ const DeleteConfirmModal = ({
           )}
         </div>
 
-        <div className="p-6 bg-gray-900/50 rounded-b-2xl flex gap-3">
+        <div className="relative p-6 bg-slate-950/50 border-t border-red-500/10 flex gap-3">
           <Button
             onClick={onClose}
             disabled={isDeleting}
-            className="flex-1 bg-transparent border border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 h-12 bg-transparent border-2 border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white hover:border-gray-500 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancelar
           </Button>
           <Button
             onClick={handleConfirm}
             disabled={isDeleting}
-            className="flex-1 bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 h-12 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
           >
             {isDeleting ? (
               <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 Eliminando...
               </>
             ) : (
@@ -160,12 +170,8 @@ const DeleteConfirmModal = ({
 
       <style jsx>{`
         @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
         @keyframes scaleIn {
           from {
@@ -191,16 +197,11 @@ const DeleteConfirmModal = ({
 export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [filteredAppointments, setFilteredAppointments] = useState<
-    Appointment[]
-  >([]);
+  const [filteredAppointments, setFilteredAppointments] = useState<Appointment[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDate, setFilterDate] = useState<"today" | "all">("today");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [loading, setLoading] = useState(true);
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [appointmentToDelete, setAppointmentToDelete] = useState<{
     id: string;
@@ -212,12 +213,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
   useEffect(() => {
     const todayISO = formatDateISO(new Date());
-    console.log(
-      "[v0] Initial load - filterDate:",
-      filterDate,
-      "todayISO:",
-      todayISO
-    );
+    console.log("[v0] Initial load - filterDate:", filterDate, "todayISO:", todayISO);
     if (filterDate === "today") loadAppointments(undefined, todayISO);
     else loadAppointments();
   }, []);
@@ -226,12 +222,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     const handler = setTimeout(() => {
       const todayISO = formatDateISO(new Date());
       const fechaFilter = filterDate === "today" ? todayISO : undefined;
-      console.log(
-        "[v0] Debounced load - searchTerm:",
-        searchTerm,
-        "fechaFilter:",
-        fechaFilter
-      );
+      console.log("[v0] Debounced load - searchTerm:", searchTerm, "fechaFilter:", fechaFilter);
       loadAppointments(searchTerm, fechaFilter);
     }, 300);
 
@@ -242,10 +233,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     filterAppointments();
   }, [appointments, searchTerm, filterDate, selectedDate]);
 
-  const loadAppointments = async (
-    patenteFilter?: string,
-    fechaFilter?: string
-  ) => {
+  const loadAppointments = async (patenteFilter?: string, fechaFilter?: string) => {
     try {
       console.log("[v0] Loading appointments from Firebase...", {
         patenteFilter,
@@ -297,10 +285,9 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
     if (searchTerm) {
       const s = searchTerm.trim().toLowerCase();
-      filtered = filtered.filter((apt) =>
-        apt.patente.toLowerCase().includes(s)
-      );
+      filtered = filtered.filter((apt) => apt.patente.toLowerCase().includes(s));
     }
+    
     if (filterDate === "today") {
       const todayISO = formatDateISO(new Date());
       filtered = filtered.filter((apt) => apt.fecha === todayISO);
@@ -320,7 +307,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           const [hh, mm] = apt.hora.split(":").map((v) => parseInt(v, 10));
           const appointmentTime = new Date();
           appointmentTime.setHours(hh, mm, 0, 0);
-
           return appointmentTime > now;
         }
         return false;
@@ -364,14 +350,12 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
   const displayCount =
     filterDate === "today"
-      ? filteredAppointments.filter(
-          (apt) => apt.fecha === formatDateISO(new Date())
-        ).length
+      ? filteredAppointments.filter((apt) => apt.fecha === formatDateISO(new Date())).length
       : filteredAppointments.length;
 
   return (
     <div className="space-y-6 flex flex-col">
-      <p className="text-white text-sm">
+      <p className="text-white text-sm font-semibold tracking-wide">
         {displayCount} TURNO{displayCount !== 1 ? "S" : ""}
       </p>
 
@@ -385,10 +369,10 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
               setSelectedDate(new Date());
               loadAppointments(searchTerm, todayISO);
             }}
-            className={`flex-1 ${
+            className={`flex-1 h-12 rounded-xl font-semibold transition-all duration-300 ${
               filterDate === "today"
-                ? "bg-cyan-700 hover:bg-cyan-600"
-                : "bg-transparent border border-white hover:bg-white/10"
+                ? "bg-cyan-700 hover:bg-cyan-600 shadow-lg shadow-cyan-500/30"
+                : "bg-transparent border-2 border-white/30 hover:border-white/50 hover:bg-white/5"
             } text-white`}
           >
             HOY
@@ -400,10 +384,10 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
               setSelectedDate(undefined);
               loadAppointments();
             }}
-            className={`flex-1 ${
+            className={`flex-1 h-12 rounded-xl font-semibold transition-all duration-300 ${
               filterDate === "all"
-                ? "bg-cyan-700 hover:bg-cyan-600"
-                : "bg-transparent border border-white hover:bg-white/10"
+                ? "bg-cyan-700 hover:bg-cyan-600 shadow-lg shadow-cyan-500/30"
+                : "bg-transparent border-2 border-white/30 hover:border-white/50 hover:bg-white/5"
             } text-white`}
           >
             TODOS
@@ -411,9 +395,9 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 w-full">
-        <div className="w-full">
-          <div className="bg-black border border-white/10 rounded-lg p-2 sm:p-4 mb-6 overflow-hidden">
+      <div className="flex flex-col lg:flex-row gap-6 w-full">
+        <div className="w-full lg:flex-1">
+          <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl p-4 overflow-hidden">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -431,12 +415,18 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           </div>
         </div>
 
-        <div className="flex-1 min-w-0">
+        <div className="w-full lg:flex-1 min-w-0">
           <Card className="p-4 h-full bg-transparent">
             {loading ? (
-              <p className="text-white text-center">Cargando turnos...</p>
+              <div className="text-center p-8">
+                <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-white font-medium">Cargando turnos...</p>
+              </div>
             ) : filteredAppointments.length === 0 ? (
-              <div className="text-center space-y-6">
+              <div className="text-center space-y-6 p-8">
+                <div className="inline-flex items-center justify-center p-4  from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-400/20 mb-4">
+                  <CalendarIcon className="text-cyan-400" size={48} />
+                </div>
                 <p className="text-white text-xl font-semibold">
                   No hay turnos registrados para{" "}
                   {filterDate === "today" ? "hoy" : "esta fecha"}
@@ -444,7 +434,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 {user?.role === "admin" && onAdd && (
                   <Button
                     onClick={onAdd}
-                    className="bg-cyan-700 hover:bg-cyan-600 text-white w-full py-4 text-base font-semibold flex items-center justify-center gap-2"
+                    className=" from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white w-full py-4 text-base font-semibold flex items-center justify-center gap-2 rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/30"
                   >
                     <Plus size={20} />
                     Agendar Turno
@@ -456,16 +446,18 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 {filteredAppointments.map((apt) => (
                   <div
                     key={apt.id}
-                    className="relative overflow-hidden flex flex-col bg-cyan-900/20 rounded-lg w-full md:max-w-3xl mx-auto"
+                    className="group relative overflow-hidden flex flex-col  from-cyan-900/20 to-blue-900/20 backdrop-blur-sm rounded-2xl w-full border border-cyan-500/20 hover:border-cyan-400/40 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10"
                   >
+                    <div className="absolute inset-0  from-cyan-500/0 via-cyan-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
                     {user?.role === "admin" && (
-                      <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
+                      <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
                         <Button
                           onClick={() => onEdit?.(apt)}
                           size="icon"
                           variant="ghost"
                           title="Editar turno"
-                          className="bg-cyan-700/60 hover:bg-cyan-700/80 text-white p-2 rounded"
+                          className="p-2.5 bg-cyan-600/80 hover:bg-cyan-500 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg"
                         >
                           <Pencil size={18} />
                         </Button>
@@ -474,53 +466,73 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                           size="icon"
                           variant="ghost"
                           title="Eliminar turno"
-                          className="bg-red-700/60 hover:bg-red-700/80 text-white p-2 rounded"
+                          className="p-2.5 bg-red-600/80 hover:bg-red-500 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg"
                         >
                           <Trash2 size={18} />
                         </Button>
                       </div>
                     )}
 
-                    <div className="flex-1 overflow-y-auto max-h-96 p-6 pt-12">
-                      <div className="space-y-3 min-w-0">
-                        <div className="pr-2">
-                          <h3 className="text-white font-bold text-xl">
+                    <div className="relative flex-1 p-6 pt-16">
+                      <div className="space-y-4 min-w-0">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="p-2  from-cyan-500/20 to-blue-500/20 rounded-xl border border-cyan-400/30">
+                            <User size={20} className="text-cyan-400" />
+                          </div>
+                          <h3 className="text-white font-bold text-2xl">
                             {apt.nombreCompleto}
                           </h3>
                         </div>
-                        <p className="text-cyan-300 text-sm font-semibold flex items-center gap-2">
-                          <CalendarIcon size={16} />
-                          {format(parseISO(apt.fecha), "dd/MM/yyyy", {
-                            locale: es,
-                          })}{" "}
-                          - {apt.hora}
-                        </p>
-                        <div className="border-t border-cyan-700/50 pt-3 space-y-2">
-                          <div>
-                            <p className="text-cyan-300 text-xs font-semibold uppercase">
-                              Patente
-                            </p>
-                            <p className="text-white font-mono text-lg">
+                        
+                        <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold bg-cyan-500/5 px-3 py-2 rounded-lg border border-cyan-500/10">
+                          <Clock size={16} />
+                          {format(parseISO(apt.fecha), "EEEE, dd 'de' MMMM", { locale: es })} • {apt.hora}
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
+                          <div className="bg-slate-950/30 rounded-xl p-4 border border-cyan-500/10 backdrop-blur-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Car size={14} className="text-cyan-400" />
+                              <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wide">
+                                Patente
+                              </p>
+                            </div>
+                            <p className="text-white font-mono text-lg font-bold">
                               {apt.patente}
                             </p>
                           </div>
-                          <div>
-                            <p className="text-cyan-300 text-xs font-semibold uppercase">
-                              Modelo
-                            </p>
-                            <p className="text-white font-mono text-lg">
+
+                          <div className="bg-slate-950/30 rounded-xl p-4 border border-cyan-500/10 backdrop-blur-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Car size={14} className="text-cyan-400" />
+                              <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wide">
+                                Modelo
+                              </p>
+                            </div>
+                            <p className="text-white text-lg font-semibold">
                               {apt.modelo}
                             </p>
                           </div>
-                          <div>
-                            <p className="text-cyan-300 text-xs font-semibold uppercase">
-                              Teléfono
-                            </p>
-                            <p className="text-white">{apt.telefono}</p>
+
+                          <div className="bg-slate-950/30 rounded-xl p-4 border border-cyan-500/10 backdrop-blur-sm sm:col-span-2">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Phone size={14} className="text-cyan-400" />
+                              <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wide">
+                                Teléfono
+                              </p>
+                            </div>
+                            <p className="text-white text-base">{apt.telefono}</p>
                           </div>
                         </div>
-                        <div className="border-t border-cyan-700/50 pt-3">
-                          <p className="text-cyan-200 text-sm italic word-break">
+
+                        <div className="bg-slate-950/30 rounded-xl p-4 border border-cyan-500/10 backdrop-blur-sm mt-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <FileText size={14} className="text-cyan-400" />
+                            <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wide">
+                              Descripción
+                            </p>
+                          </div>
+                          <p className="text-cyan-100 text-sm leading-relaxed italic">
                             {apt.descripcion}
                           </p>
                         </div>
