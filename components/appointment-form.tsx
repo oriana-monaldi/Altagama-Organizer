@@ -128,7 +128,7 @@ export function AppointmentForm({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-6 px-4 sm:px-6 lg:px-8">
+    <div className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -144,12 +144,6 @@ export function AppointmentForm({
           </Button>
 
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 backdrop-blur-sm mb-4">
-              <Sparkles size={16} className="text-cyan-400" />
-              <span className="text-cyan-300 text-sm font-medium">
-                Sistema de Turnos
-              </span>
-            </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent">
               {appointment ? "Editar Turno" : "Nuevo Turno"}
             </h1>
@@ -269,20 +263,8 @@ export function AppointmentForm({
                         setFormData({ ...formData, fecha: e.target.value })
                       }
                       required
-                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                     />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const el = document.getElementById("fecha-input") as HTMLInputElement | null;
-                        if (el && typeof el.showPicker === "function") {
-                          el.showPicker();
-                        }
-                      }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300 transition-colors pointer-events-auto z-10"
-                    >
-                      <Calendar size={20} />
-                    </button>
                   </div>
                 </div>
 
@@ -301,20 +283,8 @@ export function AppointmentForm({
                         setFormData({ ...formData, hora: e.target.value })
                       }
                       required
-                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                     />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const el = document.getElementById("hora-input") as HTMLInputElement | null;
-                        if (el && typeof el.showPicker === "function") {
-                          el.showPicker();
-                        }
-                      }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300 transition-colors pointer-events-auto z-10"
-                    >
-                      <Clock size={20} />
-                    </button>
                   </div>
                 </div>
               </div>
@@ -383,7 +353,7 @@ export function AppointmentForm({
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-14 sm:h-16 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
+            className="w-full h-14 sm:h-16  from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               {loading ? (
@@ -398,7 +368,7 @@ export function AppointmentForm({
                 </>
               )}
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+            <div className="absolute inset-0  from-cyan-400 via-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
           </Button>
         </form>
       </div>
