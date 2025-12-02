@@ -353,22 +353,18 @@ export function AppointmentForm({
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-14 sm:h-16  from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
+            className="w-full h-14 sm:h-16 bg-cyan-700 hover:bg-cyan-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              {loading ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Guardando...
-                </>
-              ) : (
-                <>
-                  {appointment ? "Actualizar Turno" : "Registrar Turno"}
-                  <Sparkles size={20} />
-                </>
-              )}
-            </span>
-            <div className="absolute inset-0  from-cyan-400 via-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                Guardando...
+              </>
+            ) : (
+              <>
+                {appointment ? "Actualizar Turno" : "Registrar Turno"}
+              </>
+            )}
           </Button>
         </form>
       </div>
