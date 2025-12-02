@@ -328,11 +328,18 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     setShowDeleteModal(true);
   };
 
-  const handleDeleteConfirm = async () => {
+ const handleDeleteConfirm = async () => {
     if (!appointmentToDelete) return;
 
     try {
+      setAppointments(prev => prev.filter(apt => apt.id !== appointmentToDelete.id));
+      
+      setShowDeleteModal(false);
+      setAppointmentToDelete(null);
+      
       await deleteAppointment(appointmentToDelete.id);
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
       const todayISO = formatDateISO(new Date());
       const fechaFilter =
         filterDate === "today"
@@ -341,10 +348,6 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
           ? formatDateISO(selectedDate)
           : undefined;
       await loadAppointments(searchTerm, fechaFilter);
-      setShowDeleteModal(false);
-      setAppointmentToDelete(null);
-    } catch (error) {
-      console.error("Error deleting appointment:", error);
     }
   };
 

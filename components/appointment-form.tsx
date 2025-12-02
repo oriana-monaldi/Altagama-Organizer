@@ -251,7 +251,9 @@ export function AppointmentForm({ appointment, onBack, onSuccess }: AppointmentF
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  useEffect(() => {
+useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+    
     if (appointment) {
       setFormData({
         nombreCompleto: appointment.nombreCompleto,
