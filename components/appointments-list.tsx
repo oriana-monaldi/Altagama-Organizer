@@ -434,7 +434,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                 {user?.role === "admin" && onAdd && (
                   <Button
                     onClick={onAdd}
-                    className=" from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white w-full py-4 text-base font-semibold flex items-center justify-center gap-2 rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/30"
+                    className=" from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-black w-full py-4 text-base font-semibold flex items-center justify-center gap-2 rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/30"
                   >
                     <Plus size={20} />
                     Agendar Turno
