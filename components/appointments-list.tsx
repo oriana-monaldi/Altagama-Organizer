@@ -151,7 +151,7 @@ const DeleteConfirmModal = ({
           <Button
             onClick={handleConfirm}
             disabled={isDeleting}
-            className="flex-1 h-12  from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
+            className="flex-1 h-12  from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-black rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
           >
             {isDeleting ? (
               <>
