@@ -97,7 +97,7 @@ const DeleteConfirmModal = ({
               {appointmentInfo.nombreCompleto && (
                 <div className="flex justify-between items-center pb-3 border-b border-white/5">
                   <span className="text-sm font-semibold text-red-300 uppercase tracking-wide">
-                    Paciente
+                    DUEÑO
                   </span>
                   <span className="text-base font-bold text-white">
                     {appointmentInfo.nombreCompleto}
