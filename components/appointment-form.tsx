@@ -14,9 +14,10 @@ import {
   User,
   Phone,
   Wrench,
-  CalendarIcon,
+  Calendar,
   Clock,
   Car,
+  Sparkles,
 } from "lucide-react";
 
 interface AppointmentFormProps {
@@ -127,193 +128,280 @@ export function AppointmentForm({
   };
 
   return (
-    <div className="space-y-6 max-w-lg mx-auto px-4 sm:px-0 w-full">
-      <Button
-        onClick={onBack}
-        variant="ghost"
-        className="text-white hover:text-cyan-300 hover:bg-white/10 p-2"
-      >
-        <ArrowLeft size={24} />
-      </Button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-6 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <Button
+            onClick={onBack}
+            variant="ghost"
+            className="group flex items-center gap-2 text-cyan-300 hover:text-white transition-all duration-300 mb-6 p-0 h-auto"
+          >
+            <div className="p-2 rounded-lg bg-white/5 group-hover:bg-white/10 backdrop-blur-sm transition-all">
+              <ArrowLeft size={20} />
+            </div>
+            <span className="font-medium">Volver</span>
+          </Button>
 
-      <h2 className="text-2xl font-bold text-white text-center">
-        {appointment ? "EDITAR TURNO" : "NUEVO TURNO"}
-      </h2>
-
-      {error && (
-        <div className="bg-red-900/50 border border-red-600 text-red-200 px-4 py-3 rounded">
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-6 w-full">
-        <div className="space-y-2 w-full">
-          <label className="text-sm sm:text-base text-white flex items-center gap-2">
-            <User size={18} />
-            Nombre Completo
-          </label>
-          <Input
-            type="text"
-            placeholder="Nombre completo"
-            value={formData.nombreCompleto}
-            onChange={(e) =>
-              setFormData({ ...formData, nombreCompleto: e.target.value })
-            }
-            required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
-          />
-        </div>
-
-        <div className="space-y-2 w-full">
-          <label className="text-sm sm:text-base text-white flex items-center gap-2">
-            <Phone size={18} />
-            Teléfono
-          </label>
-          <Input
-            type="tel"
-            placeholder="Teléfono"
-            value={formData.telefono}
-            onChange={(e) =>
-              setFormData({ ...formData, telefono: e.target.value })
-            }
-            required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
-          />
-        </div>
-
-        <div className="space-y-2 w-full">
-          <label className="text-sm sm:text-base text-white flex items-center gap-2">
-            <Wrench size={18} />
-            Descripción del trabajo
-          </label>
-          <Textarea
-            placeholder="Descripción del trabajo"
-            value={formData.descripcion}
-            onChange={(e) =>
-              setFormData({ ...formData, descripcion: e.target.value })
-            }
-            required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 min-h-[100px] w-full"
-          />
-        </div>
-
-        <div className="space-y-2 w-full">
-          <label className="text-sm text-white flex items-center gap-2">
-            <CalendarIcon size={16} />
-            Fecha
-          </label>
-          <div className="relative w-full">
-            <Input
-              id="fecha-input"
-              type="date"
-              value={formData.fecha}
-              onChange={(e) =>
-                setFormData({ ...formData, fecha: e.target.value })
-              }
-              required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0"
-            />
-            <button
-              type="button"
-              aria-label="Abrir selector de fecha"
-              onClick={() => {
-                const el = document.getElementById(
-                  "fecha-input"
-                ) as HTMLInputElement | null;
-                if (!el) return;
-                if (typeof el.showPicker === "function") el.showPicker();
-                else el.focus();
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto z-10"
-            >
-              <CalendarIcon size={20} />
-            </button>
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 backdrop-blur-sm mb-4">
+              <Sparkles size={16} className="text-cyan-400" />
+              <span className="text-cyan-300 text-sm font-medium">
+                Sistema de Turnos
+              </span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              {appointment ? "Editar Turno" : "Nuevo Turno"}
+            </h1>
+            <p className="text-gray-400 text-sm sm:text-base">
+              {appointment
+                ? "Modifica los detalles de tu cita"
+                : "Completa el formulario para agendar tu cita"}
+            </p>
           </div>
         </div>
 
-        <div className="space-y-2 w-full">
-          <label className="text-sm text-white flex items-center gap-2">
-            <Clock size={16} />
-            Hora
-          </label>
-          <div className="relative w-full">
-            <Input
-              id="hora-input"
-              type="time"
-              value={formData.hora}
-              onChange={(e) =>
-                setFormData({ ...formData, hora: e.target.value })
-              }
-              required
-              className="bg-black border-cyan-600 text-white focus:border-cyan-500 h-12 w-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0"
-            />
-            <button
-              type="button"
-              aria-label="Abrir selector de hora"
-              onClick={() => {
-                const el = document.getElementById(
-                  "hora-input"
-                ) as HTMLInputElement | null;
-                if (!el) return;
-                if (typeof el.showPicker === "function") el.showPicker();
-                else el.focus();
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-cyan-200 pointer-events-auto z-10"
-            >
-              <Clock size={20} />
-            </button>
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border-2 border-red-500/50 backdrop-blur-sm animate-pulse">
+            <p className="text-red-300 text-sm font-medium">{error}</p>
           </div>
-        </div>
+        )}
 
-        <div className="space-y-2 w-full">
-          <label className="text-sm text-white flex items-center gap-2">
-            <Car size={16} />
-            Patente
-          </label>
-          <Input
-            type="text"
-            placeholder="Patente del vehículo"
-            value={formData.patente}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                patente: e.target.value.toUpperCase(),
-              })
-            }
-            required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
-          />
-        </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
+            {/* Personal Info Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 pb-4 border-b border-white/10">
+                <User size={20} className="text-cyan-400" />
+                <h3 className="text-lg font-semibold text-white">
+                  Información Personal
+                </h3>
+              </div>
 
-        <div className="space-y-2 w-full">
-          <label className="text-sm text-white flex items-center gap-2">
-            <Car size={16} />
-            Modelo
-          </label>
-          <Input
-            type="text"
-            placeholder="Modelo del vehículo"
-            value={formData.modelo}
-            onChange={(e) =>
-              setFormData({ ...formData, modelo: e.target.value })
-            }
-            required
-            className="bg-black border-cyan-600 text-white placeholder:text-gray-500 focus:border-cyan-500 h-12 w-full"
-          />
-        </div>
+              {/* Nombre Completo */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                  <User size={16} />
+                  Nombre Completo
+                </label>
+                <div className="relative group">
+                  <Input
+                    type="text"
+                    placeholder="Ingresa tu nombre completo"
+                    value={formData.nombreCompleto}
+                    onChange={(e) =>
+                      setFormData({ ...formData, nombreCompleto: e.target.value })
+                    }
+                    required
+                    className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
+                  />
+                </div>
+              </div>
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-cyan-700 hover:bg-cyan-600 text-white py-4 sm:py-6 text-lg"
-        >
-          {loading
-            ? "Guardando..."
-            : appointment
-            ? "Actualizar Turno"
-            : "Registrar Turno"}
-        </Button>
-      </form>
+              {/* Teléfono */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                  <Phone size={16} />
+                  Teléfono
+                </label>
+                <div className="relative group">
+                  <Input
+                    type="tel"
+                    placeholder="Ej: +54 9 11 1234-5678"
+                    value={formData.telefono}
+                    onChange={(e) =>
+                      setFormData({ ...formData, telefono: e.target.value })
+                    }
+                    required
+                    className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Service Info Section */}
+          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 pb-4 border-b border-white/10">
+                <Wrench size={20} className="text-cyan-400" />
+                <h3 className="text-lg font-semibold text-white">
+                  Detalles del Servicio
+                </h3>
+              </div>
+
+              {/* Descripción */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                  <Wrench size={16} />
+                  Descripción del Trabajo
+                </label>
+                <div className="relative group">
+                  <Textarea
+                    placeholder="Describe el trabajo a realizar (ej: Cambio de aceite, revisión general, reparación de frenos...)"
+                    value={formData.descripcion}
+                    onChange={(e) =>
+                      setFormData({ ...formData, descripcion: e.target.value })
+                    }
+                    required
+                    rows={4}
+                    className="w-full px-4 py-3 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 resize-none group-hover:border-cyan-500/50"
+                  />
+                </div>
+              </div>
+
+              {/* Fecha y Hora - Grid responsivo */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Fecha */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                    <Calendar size={16} />
+                    Fecha
+                  </label>
+                  <div className="relative group">
+                    <Input
+                      id="fecha-input"
+                      type="date"
+                      value={formData.fecha}
+                      onChange={(e) =>
+                        setFormData({ ...formData, fecha: e.target.value })
+                      }
+                      required
+                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = document.getElementById("fecha-input") as HTMLInputElement | null;
+                        if (el && typeof el.showPicker === "function") {
+                          el.showPicker();
+                        }
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300 transition-colors pointer-events-auto z-10"
+                    >
+                      <Calendar size={20} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Hora */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                    <Clock size={16} />
+                    Hora
+                  </label>
+                  <div className="relative group">
+                    <Input
+                      id="hora-input"
+                      type="time"
+                      value={formData.hora}
+                      onChange={(e) =>
+                        setFormData({ ...formData, hora: e.target.value })
+                      }
+                      required
+                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = document.getElementById("hora-input") as HTMLInputElement | null;
+                        if (el && typeof el.showPicker === "function") {
+                          el.showPicker();
+                        }
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300 transition-colors pointer-events-auto z-10"
+                    >
+                      <Clock size={20} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Vehicle Info Section */}
+          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 pb-4 border-b border-white/10">
+                <Car size={20} className="text-cyan-400" />
+                <h3 className="text-lg font-semibold text-white">
+                  Información del Vehículo
+                </h3>
+              </div>
+
+              {/* Patente y Modelo - Grid responsivo */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Patente */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                    <Car size={16} />
+                    Patente
+                  </label>
+                  <div className="relative group">
+                    <Input
+                      type="text"
+                      placeholder="ABC 123"
+                      value={formData.patente}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          patente: e.target.value.toUpperCase(),
+                        })
+                      }
+                      required
+                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 uppercase group-hover:border-cyan-500/50"
+                    />
+                  </div>
+                </div>
+
+                {/* Modelo */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                    <Car size={16} />
+                    Modelo
+                  </label>
+                  <div className="relative group">
+                    <Input
+                      type="text"
+                      placeholder="Ej: Toyota Corolla 2020"
+                      value={formData.modelo}
+                      onChange={(e) =>
+                        setFormData({ ...formData, modelo: e.target.value })
+                      }
+                      required
+                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full h-14 sm:h-16 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Guardando...
+                </>
+              ) : (
+                <>
+                  {appointment ? "Actualizar Turno" : "Registrar Turno"}
+                  <Sparkles size={20} />
+                </>
+              )}
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

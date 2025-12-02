@@ -11,7 +11,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
-import { Trash2, Pencil, CalendarIcon, Plus, AlertTriangle, X } from "lucide-react";
+import {
+  Trash2,
+  Pencil,
+  CalendarIcon,
+  Plus,
+  AlertTriangle,
+  X,
+} from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -20,12 +27,11 @@ interface AppointmentsListProps {
   onAdd?: () => void;
 }
 
-// Modal de confirmación de eliminación
-const DeleteConfirmModal = ({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
-  appointmentInfo 
+const DeleteConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  appointmentInfo,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -50,7 +56,6 @@ const DeleteConfirmModal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60 backdrop-blur-sm animate-fadeIn">
       <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-cyan-700/30 rounded-2xl shadow-2xl max-w-md w-full transform transition-all animate-scaleIn">
-        {/* Header */}
         <div className="relative p-6 border-b border-cyan-700/20">
           <button
             onClick={onClose}
@@ -65,50 +70,66 @@ const DeleteConfirmModal = ({
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">Eliminar Turno</h3>
-              <p className="text-sm text-gray-400 mt-1">Esta acción no se puede deshacer</p>
+              <p className="text-sm text-gray-400 mt-1">
+                Esta acción no se puede deshacer
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Body */}
         <div className="p-6">
           <p className="text-gray-300 mb-4">
             ¿Estás seguro de que deseas eliminar este turno?
           </p>
-          
+
           {appointmentInfo && (
             <div className="bg-cyan-900/20 rounded-lg p-4 space-y-2 border border-cyan-700/30">
               {appointmentInfo.nombreCompleto && (
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">Paciente:</span>
-                  <span className="text-sm font-semibold text-white">{appointmentInfo.nombreCompleto}</span>
+                  <span className="text-sm font-medium text-cyan-300">
+                    Paciente:
+                  </span>
+                  <span className="text-sm font-semibold text-white">
+                    {appointmentInfo.nombreCompleto}
+                  </span>
                 </div>
               )}
               {appointmentInfo.patente && (
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">Patente:</span>
-                  <span className="text-sm font-semibold text-white font-mono">{appointmentInfo.patente}</span>
+                  <span className="text-sm font-medium text-cyan-300">
+                    Patente:
+                  </span>
+                  <span className="text-sm font-semibold text-white font-mono">
+                    {appointmentInfo.patente}
+                  </span>
                 </div>
               )}
               {appointmentInfo.fecha && (
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">Fecha:</span>
+                  <span className="text-sm font-medium text-cyan-300">
+                    Fecha:
+                  </span>
                   <span className="text-sm font-semibold text-white">
-                    {format(parseISO(appointmentInfo.fecha), "dd/MM/yyyy", { locale: es })}
+                    {format(parseISO(appointmentInfo.fecha), "dd/MM/yyyy", {
+                      locale: es,
+                    })}
                   </span>
                 </div>
               )}
               {appointmentInfo.hora && (
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-cyan-300">Hora:</span>
-                  <span className="text-sm font-semibold text-white">{appointmentInfo.hora}</span>
+                  <span className="text-sm font-medium text-cyan-300">
+                    Hora:
+                  </span>
+                  <span className="text-sm font-semibold text-white">
+                    {appointmentInfo.hora}
+                  </span>
                 </div>
               )}
             </div>
           )}
         </div>
 
-        {/* Footer */}
         <div className="p-6 bg-gray-900/50 rounded-b-2xl flex gap-3">
           <Button
             onClick={onClose}
@@ -139,15 +160,29 @@ const DeleteConfirmModal = ({
 
       <style jsx>{`
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
         @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
-        .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
-        .animate-scaleIn { animation: scaleIn 0.2s ease-out; }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.2s ease-out;
+        }
       `}</style>
     </div>
   );
@@ -165,8 +200,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
     new Date()
   );
   const [loading, setLoading] = useState(true);
-  
-  // Estados para el modal de eliminación
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [appointmentToDelete, setAppointmentToDelete] = useState<{
     id: string;
@@ -274,27 +308,21 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
       const iso = formatDateISO(selectedDate);
       filtered = filtered.filter((apt) => apt.fecha === iso);
     } else if (filterDate === "all" && !selectedDate) {
-      // Cuando se selecciona "TODOS", filtrar solo turnos futuros
       const now = new Date();
       const todayISO = formatDateISO(now);
-      
+
       filtered = filtered.filter((apt) => {
-        // Si el turno es de una fecha futura, incluirlo
         if (apt.fecha > todayISO) {
           return true;
         }
-        
-        // Si el turno es de hoy, verificar la hora
+
         if (apt.fecha === todayISO) {
           const [hh, mm] = apt.hora.split(":").map((v) => parseInt(v, 10));
           const appointmentTime = new Date();
           appointmentTime.setHours(hh, mm, 0, 0);
-          
-          // Solo incluir si la hora del turno es mayor a la hora actual
+
           return appointmentTime > now;
         }
-        
-        // Si el turno es del pasado, no incluirlo
         return false;
       });
     }
@@ -316,7 +344,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
 
   const handleDeleteConfirm = async () => {
     if (!appointmentToDelete) return;
-    
+
     try {
       await deleteAppointment(appointmentToDelete.id);
       const todayISO = formatDateISO(new Date());
