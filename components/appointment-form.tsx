@@ -257,7 +257,7 @@ export function AppointmentForm({
                         setFormData({ ...formData, fecha: e.target.value })
                       }
                       required
-                      className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
+                      className="h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                     />
                   </div>
                 </div>
