@@ -59,8 +59,8 @@ const DeleteConfirmModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn">
-      <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-md w-full border border-red-500/30 overflow-hidden animate-scaleIn">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5 blur-xl"></div>
+      <div className="relative  from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-md w-full border border-red-500/30 overflow-hidden animate-scaleIn">
+        <div className="absolute inset-0  from-red-500/5 to-orange-500/5 blur-xl"></div>
         
         <div className="relative p-6 border-b border-red-500/20">
           <button
@@ -74,7 +74,7 @@ const DeleteConfirmModal = ({
           <div className="flex items-center gap-4">
             <div className="relative">
               <div className="absolute inset-0 bg-red-500/20 rounded-2xl blur-xl"></div>
-              <div className="relative p-3 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-2xl border border-red-500/30">
+              <div className="relative p-3  from-red-500/20 to-orange-500/20 rounded-2xl border border-red-500/30">
                 <AlertTriangle className="text-red-400" size={28} />
               </div>
             </div>
@@ -151,7 +151,7 @@ const DeleteConfirmModal = ({
           <Button
             onClick={handleConfirm}
             disabled={isDeleting}
-            className="flex-1 h-12 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
+            className="flex-1 h-12  from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
           >
             {isDeleting ? (
               <>
