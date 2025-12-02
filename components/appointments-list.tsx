@@ -466,7 +466,7 @@ export function AppointmentsList({ onEdit, onAdd }: AppointmentsListProps) {
                           size="icon"
                           variant="ghost"
                           title="Eliminar turno"
-                          className="p-2.5 bg-red-600/80 hover:bg-red-500 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg"
+                          className="p-2.5 bg-red-600/80 hover:bg-red-500 text-black rounded-xl transition-all duration-300 hover:scale-110 shadow-lg"
                         >
                           <Trash2 size={18} />
                         </Button>
