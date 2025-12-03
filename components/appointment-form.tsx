@@ -389,7 +389,6 @@ useEffect(() => {
                         nombreCompleto: e.target.value,
                       })
                     }
-                    required
                     className="h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                   />
                 </div>
@@ -406,7 +405,6 @@ useEffect(() => {
                     placeholder="Ej: +54 9 11 1234-5678"
                     value={formData.telefono}
                     onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                    required
                     className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                   />
                 </div>
@@ -431,7 +429,6 @@ useEffect(() => {
                     placeholder="Describe el trabajo a realizar (ej: Cambio de aceite, revisión general, reparación de frenos...)"
                     value={formData.descripcion}
                     onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-                    required
                     rows={4}
                     className="w-full px-4 py-3 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 resize-none group-hover:border-cyan-500/50"
                   />
@@ -482,7 +479,6 @@ useEffect(() => {
                           patente: e.target.value.toUpperCase(),
                         })
                       }
-                      required
                       className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 uppercase group-hover:border-cyan-500/50"
                     />
                   </div>
@@ -499,7 +495,6 @@ useEffect(() => {
                       placeholder="Ej: Toyota Corolla 2020"
                       value={formData.modelo}
                       onChange={(e) => setFormData({ ...formData, modelo: e.target.value })}
-                      required
                       className="w-full h-12 px-4 bg-black/30 border-2 border-cyan-600/30 rounded-xl text-white placeholder:text-gray-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 outline-none transition-all duration-300 group-hover:border-cyan-500/50"
                     />
                   </div>
